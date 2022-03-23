@@ -1,15 +1,15 @@
 from flask import request, make_response, jsonify
 from flask.views import MethodView
 from src.models.paciente import Paciente
+from src.utils.db import db
 from bcrypt import hashpw, gensalt
-from datetime import datetime
 from src.validators import register_validator
+import sqlalchemy
  
 class RegisterController(MethodView):
 
     def __init__(self):
-        self.model = Paciente()
-        self.validator = register_validator.Register()
+        self.validator = register_validator.CreateRegisterSchema()
 
     def post(self):
         if not request.is_json:
@@ -19,60 +19,56 @@ class RegisterController(MethodView):
             }), 400)
             
         content = request.get_json()
-        documento = content.get('documento')
-        tipoDocumento = content.get('tipoDocumento')
-        nombres = content.get('nombres')
-        apellidos = content.get('apellidos')
-        fechaNacimiento = content.get('fechaNacimiento')
-        edad = content.get('edad')
-        nacionalidad = content.get('nacionalidad')
-        lugarNacimiento = content.get('lugarNacimiento')
-        genero = content.get('genero')
-        direccion = content.get('direccion')
-        celular = content.get('celular')
-        empresa = content.get('empresa')
-        cargo = content.get('cargo')
-        fechaIngreso = content.get('fechaIngreso')
-        tiempoCargo = content.get('tiempoCargo')
-        arl = content.get('arl')
-        eps = content.get('eps')
-        afp = content.get('afp')
-        telefonoEmpresa = content.get('telefonoEmpresa')
-        observaciones = content.get('observaciones')
-        correo = content.get('correo')
-        password = bytes(content.get('password'), encoding='utf8')
-        rol = content.get('rol')
-        join_at = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S')
-        hashed_pass = hashpw(password, gensalt())
-        self.model.execute_query(
-            f"""INSERT INTO paciente VALUES(
-                '{documento}',
-                '{tipoDocumento}',
-                '{nombres}',
-                '{apellidos}',
-                '{fechaNacimiento}',
-                '{edad}',
-                '{nacionalidad}',
-                '{lugarNacimiento}',
-                '{genero}',
-                '{direccion}',
-                '{celular}',
-                '{empresa}',
-                '{cargo}',
-                '{fechaIngreso}',
-                '{tiempoCargo}',
-                '{arl}',
-                '{eps}',
-                '{afp}',
-                '{telefonoEmpresa}',
-                '{observaciones}',
-                '{correo}',
-                '{bytes.decode(hashed_pass, 'utf8')}',
-                '{rol}',
-                '{join_at}',
-                '{join_at}'
-            )"""
-        )
+
+        errors = self.validator.validate(content)
+        if errors:
+            return make_response(jsonify({
+                "status": 400,
+                "response": errors
+            }), 400)
+
+        try:
+            db.session.add(
+                Paciente(
+                    documento = content.get('documento'),
+                    tipo_documento = content.get('tipo_documento'),
+                    nombres = content.get('nombres'),
+                    apellidos = content.get('apellidos'),
+                    fecha_nacimiento = content.get('fecha_nacimiento'),
+                    lugar_nacimiento = content.get('lugar_nacimiento'),
+                    nacionalidad = content.get('nacionalidad'),
+                    genero = content.get('genero'),
+                    direccion = content.get('direccion'),
+                    telefono = content.get('telefono'),
+                    empresa = content.get('empresa'),
+                    cargo = content.get('cargo'),
+                    fecha_ingreso = content.get('fecha_ingreso'),
+                    tiempo_cargo = content.get('tiempo_cargo'),
+                    arl = content.get('arl'),
+                    eps = content.get('eps'),
+                    afp = content.get('afp'),
+                    telefono_empresa = content.get('telefono_empresa'),
+                    correo = content.get('correo'),
+                    password = hashpw(bytes(content.get('password'), encoding='utf8'), gensalt()),
+                    rol = content.get('rol'),
+                    foto = content.get('foto')
+                )
+            )
+            db.session.commit()
+
+        except sqlalchemy.exc.IntegrityError as e:
+            print(e.hide_parameters)
+            return make_response(jsonify({
+                "status": 409,
+                "response": "El documento y/o el correo ya se encuentran registrados."
+            }), 409)
+        
+        except Exception as e:
+            return make_response(jsonify({
+                "status": 409,
+                "response": str(e)
+            }), 409)
+
         return make_response(jsonify({
             "status": 201,
             "response": "Paciente creado correctamente"

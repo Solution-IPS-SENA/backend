@@ -1,12 +1,10 @@
-from ast import Str
-from time import strftime
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, validate
 from datetime import datetime as dt
-
-data = dict(time="2020-03-23")
-
+timee = dt.now()
+data = dict(time=str(timee))
+print(data)
 class TimeSchema(Schema):
-    time = fields.AwareDateTime(strftime("%Y-%m-%d"))
+    time = fields.DateTime(required=True)
 
 obje = TimeSchema()
 print(obje.validate(data))

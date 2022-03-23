@@ -1,22 +1,26 @@
 from marshmallow import Schema, fields
-from marshmallow import validate, ValidationError
+from marshmallow import validate
 
-class CreateRegisterSolutionSchema(Schema):
+class CreateRegisterSchema(Schema):
     documento = fields.Str(required=True, validate=validate.Length(min=1, max=20))
-    tipoDocumento = fields.Str(required=True, validate=lambda tipo: tipo.upper() in ("CC", "TI", "RC", "CE", "CD"))
-    fecha_nacimiento = fields.DateTime(required=True)
-    edad = fields.Int(required=True, validate=validate.Range(min=0, max=101))
-    nacionalidad = fields.Str(required=True, validate=lambda nacionalidad : nacionalidad == "colombia")
-    lugarNacimiento = fields.Str(required=True)
-    genero = fields.Str(required=True, validate=validate.ContainsOnly(['h', 'm']))
+    tipo_documento = fields.Str(required=True, validate=lambda x: True if x in ["CC", "TI", "RC", "CE", "CD"] else False)
+    nombres = fields.Str(required=True, validate=validate.Length(max=200))
+    apellidos = fields.Str(required=True, validate=validate.Length(max=200))
+    fecha_nacimiento = fields.Date(required=True)
+    lugar_nacimiento = fields.Str(required=True, validate=validate.Length(equal=3))
+    nacionalidad = fields.Str(required=True, validate=validate.Length(equal=3))
+    genero = fields.Str(required=True, validate=validate.ContainsOnly(['M', 'F']))
     direccion = fields.Str(required=True, validate=validate.Length(min=1, max=100))
     telefono = fields.Str(required=True, validate=validate.Length(min=1, max=30))
     empresa = fields.Str(required=True, validate=validate.Length(min=1, max=45))
     cargo = fields.Str(required=True, validate=validate.Length(min=1, max=20))
-    fecha_Ingreso = fields.DateTime(required=True)
-    tiempo_Cargo = fields.DateTime(required=True)
+    fecha_ingreso = fields.Date(required=True)
+    tiempo_cargo = fields.Str(required=True)
     arl = fields.Str(required=True)
     eps = fields.Str(required=True)
     afp = fields.Str(required=True)
+    telefono_empresa = fields.Str(required=True, validate=validate.Length(min=1, max=45))
     correo = fields.Str(required=True, validate=validate.Email())
-    telefono_Empresa = fields.Str(required=True, validate=validate.Length(min=1, max=45))
+    password = fields.Str(required=True, validate=validate.Length(max=200))
+    rol = fields.Str(required=True, validate=validate.Length(max=20))
+    foto = fields.Str(required=False, validate=validate.Length(max=150))
