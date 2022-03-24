@@ -7,8 +7,8 @@ from src.validators import login_validator
 from os import getenv
  
 class LoginController(MethodView):
+
     def __init__(self):
-        self.model = Paciente()
         self.validator = login_validator.CreateLoginSchema()
 
     def post(self):
@@ -19,41 +19,41 @@ class LoginController(MethodView):
             }), 400)
 
         content = request.get_json()
-        validation_errors = self.validator.validate(content)
+        errors = self.validator.validate(content)
 
-        if validation_errors:
+        if errors:
             return make_response(jsonify({
                 "status": 400,
-                "errors": validation_errors
+                "errors": errors
             }), 400)
 
-        bd_data = self.model.fetch_one(f"SELECT documento, password FROM paciente WHERE correo='{content.get('correo')}'", as_dict=True)
-
-        if bd_data is None:
+        paciente = Paciente.query.filter_by(correo=content.get('correo')).first()
+        if paciente is None:
             return make_response(jsonify({
                 "status": 422,
                 "response": "El usuario no está registrado."
             }), 422)
             
-        db_pass_bytes = bytes(bd_data.get("password"), 'utf8')
+        db_pass = bytes(paciente.password, 'utf8')
         pass_bytes = bytes(content.get("password"), 'utf8')
         
-        if not checkpw(pass_bytes, db_pass_bytes):
+        if not checkpw(pass_bytes, db_pass):
             return make_response(jsonify({
-                "status": 400,
+                "status": 406,
                 "response": "La contraseña es incorrecta."
-            }), 400)
+            }), 406)
 
         token = jwt.encode(
-                {"correo": content.get("correo"),
-                    "documento": bd_data.get("documento"),
-                    "rol": bd_data.get("rol")
+                {
+                    "correo": paciente.correo,
+                    "documento": paciente.documento,
+                    "rol": paciente.rol
                 }, getenv("JWT_KEY"), "HS256")
         
-        token_str = bytes.decode(token, 'utf8')
+        token = bytes.decode(token, 'utf8')
 
         return make_response(jsonify({
             "status": 200,
             "response": "Inicio de sesión satisfactorio",
-            "token": f"{token_str}"
+            "token": f"{token}"
         }), 200)

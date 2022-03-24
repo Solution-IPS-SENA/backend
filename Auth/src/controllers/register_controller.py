@@ -49,12 +49,17 @@ class RegisterController(MethodView):
                     afp = content.get('afp'),
                     telefono_empresa = content.get('telefono_empresa'),
                     correo = content.get('correo'),
-                    password = hashpw(bytes(content.get('password'), encoding='utf8'), gensalt()),
+                    password = bytes.decode(hashpw(bytes(content.get('password'), encoding='utf8'), gensalt()), encoding='utf-8'),
                     rol = content.get('rol'),
                     foto = content.get('foto')
                 )
             )
             db.session.commit()
+
+            return make_response(jsonify({
+                "status": 201,
+                "response": "Paciente creado correctamente"
+            }), 201)
 
         except sqlalchemy.exc.IntegrityError as e:
             print(e.hide_parameters)
@@ -69,7 +74,3 @@ class RegisterController(MethodView):
                 "response": str(e)
             }), 409)
 
-        return make_response(jsonify({
-            "status": 201,
-            "response": "Paciente creado correctamente"
-        }), 201)
