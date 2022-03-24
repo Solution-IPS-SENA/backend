@@ -3,13 +3,13 @@ from flask.views import MethodView
 from src.models.paciente import Paciente
 from src.utils.db import db
 from bcrypt import hashpw, gensalt
-from src.validators import register_validator
+from src.validators import register_paciente_validator
 import sqlalchemy
  
-class RegisterController(MethodView):
+class RegisterPacienteController(MethodView):
 
     def __init__(self):
-        self.validator = register_validator.CreateRegisterSchema()
+        self.validator = register_paciente_validator.CreateRegisterPacienteSchema()
 
     def post(self):
         if not request.is_json:
@@ -21,6 +21,7 @@ class RegisterController(MethodView):
         content = request.get_json()
 
         errors = self.validator.validate(content)
+        
         if errors:
             return make_response(jsonify({
                 "status": 400,
@@ -70,7 +71,7 @@ class RegisterController(MethodView):
         
         except Exception as e:
             return make_response(jsonify({
-                "status": 409,
+                "status": 400,
                 "response": str(e)
-            }), 409)
+            }), 400)
 

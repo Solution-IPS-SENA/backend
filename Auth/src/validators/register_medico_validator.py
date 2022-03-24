@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields
 from marshmallow import validate
 
-class CreateRegisterSchema(Schema):
+class CreateRegisterMedicoSchema(Schema):
     documento = fields.Str(required=True, validate=validate.Length(min=1, max=20))
     tipo_documento = fields.Str(required=True, validate=lambda x: True if x in ["CC", "TI", "RC", "CE", "CD"] else False)
     nombres = fields.Str(required=True, validate=validate.Length(max=200))
@@ -12,14 +12,13 @@ class CreateRegisterSchema(Schema):
     genero = fields.Str(required=True, validate=validate.ContainsOnly(['M', 'F']))
     direccion = fields.Str(required=True, validate=validate.Length(min=1, max=100))
     telefono = fields.Str(required=True, validate=validate.Length(min=1, max=30))
-    empresa = fields.Str(required=True, validate=validate.Length(min=1, max=45))
-    cargo = fields.Str(required=True, validate=validate.Length(min=1, max=20))
-    fecha_ingreso = fields.Date(required=True)
-    tiempo_cargo = fields.Str(required=True)
+    salario = fields.Integer(required=True)
+    tp = fields.Str(required=True)
     arl = fields.Str(required=True)
     eps = fields.Str(required=True)
     afp = fields.Str(required=True)
-    telefono_empresa = fields.Str(required=True, validate=validate.Length(min=1, max=45))
+    rethus = fields.Str(required=True)
+    secretaria_salud = fields.Str(required=True)
     correo = fields.Str(required=True, validate=validate.Email())
     password = fields.Str(required=True, validate=validate.Length(max=200))
     rol = fields.Str(required=True, validate=validate.Length(max=20))
