@@ -1,0 +1,12 @@
+SECRET_KEY=mySecretKey
+JWT_KEY=mySecretJwtKey
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=example
+DB_NAME=myDatabase
+DB_PORT=3306
+DB_ENGINE=mysql
+DB_DRIVER=pymysql
+APP_HOST=localhost
+APP_PORT=3000
+APP_DEBUG=True
