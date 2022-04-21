@@ -4,7 +4,7 @@ from src.models.paciente import Paciente
 import jwt
 from bcrypt import checkpw
 from src.validators import login_validator
-from os import getenv
+from src.config import KEYS
  
 class LoginController(MethodView):
 
@@ -48,7 +48,7 @@ class LoginController(MethodView):
                     "correo": paciente.correo,
                     "documento": paciente.documento,
                     "rol": paciente.rol
-                }, getenv("JWT_KEY"), "HS256")
+                }, KEYS.JWT, "HS256")
         
         token = bytes.decode(token, 'utf8')
 

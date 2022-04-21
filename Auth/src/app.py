@@ -1,9 +1,7 @@
-from flask import Flask
-from flask import make_response, jsonify
+from flask import Flask, make_response, jsonify
 from flask_cors import CORS
-from src.routes.auth_routes import auth
-from src.routes.register_routes import register
-from src.config.db_config import DB
+from src.routes import auth, register
+from src.config import APP, DB
 
 class Aplication:
     @classmethod
@@ -22,7 +20,7 @@ class Aplication:
             # Configuración de CORS
             CORS(cls.app, resources={
                r"/*": {
-                   "origins": ["http://localhost:4200", "*"]
+                   "origins": [APP.CORS, "*"]
                }
             }, supports_credentials=True)
 
@@ -31,7 +29,7 @@ class Aplication:
 
         except Exception as e:
             return make_response(jsonify({
-                "response": "Error starting server",
+                "response": "Error iniciando server.",
                 "error": str(e)
             }), 500)
 

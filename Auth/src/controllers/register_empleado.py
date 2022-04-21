@@ -4,7 +4,7 @@ from src.models.empleado import Empleado
 from src.utils.db import db
 from bcrypt import hashpw, gensalt
 from src.validators import register_empleado_validator
-import sqlalchemy
+from sqlalchemy.exc import IntegrityError
  
 class RegisterPacienteController(MethodView):
 
@@ -56,7 +56,7 @@ class RegisterPacienteController(MethodView):
                 "response": "Empleado creado correctamente"
             }), 201)
 
-        except sqlalchemy.exc.IntegrityError as e:
+        except IntegrityError as e:
             print(e.hide_parameters)
             return make_response(jsonify({
                 "status": 409,

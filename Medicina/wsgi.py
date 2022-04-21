@@ -4,8 +4,8 @@ load_dotenv()
 
 from src.app import Aplication
 from src.utils.db import db
-from flask_sqlalchemy import SQLAlchemy
 from src.config import APP
+from flask_sqlalchemy import SQLAlchemy
 
 app = Aplication.create_app()
 

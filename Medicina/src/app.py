@@ -1,6 +1,6 @@
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
-from src.routes.routes import routes
+from src.routes import routes
 from src.config import DB, APP
 
 class Aplication:
@@ -36,5 +36,4 @@ class Aplication:
     @classmethod
     def __register_routes(cls):
         # Rutas
-        cls.app.add_url_rule(routes["route_path"], view_func=routes["route_controller"], methods=["POST, GET, PUT, PATCH, DELETE"])
         pass

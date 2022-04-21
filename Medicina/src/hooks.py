@@ -1,6 +1,6 @@
 from flask import request, make_response, jsonify
 from functools import wraps
-from jwt import decode, InvalidTokenError
+from jwt import decode
 from src.config import KEYS
 
 def verify_token(func):
