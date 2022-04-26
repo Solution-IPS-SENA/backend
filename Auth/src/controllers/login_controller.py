@@ -28,6 +28,7 @@ class LoginController(MethodView):
             }), 400)
 
         paciente = Paciente.query.filter_by(correo=content.get('correo')).first()
+        
         if paciente is None:
             return make_response(jsonify({
                 "status": 422,

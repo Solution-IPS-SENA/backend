@@ -3,13 +3,13 @@ from flask.views import MethodView
 from src.models.paciente import Paciente
 from src.utils.db import db
 from bcrypt import hashpw, gensalt
-from src.validators import register_paciente_validator
-import sqlalchemy
+from src.validators.register_paciente_validator import CreateRegisterPacienteSchema
+from sqlalchemy.exc import IntegrityError
  
 class RegisterPacienteController(MethodView):
 
     def __init__(self):
-        self.validator = register_paciente_validator.CreateRegisterPacienteSchema()
+        self.validator = CreateRegisterPacienteSchema()
 
     def post(self):
         if not request.is_json:
@@ -62,8 +62,7 @@ class RegisterPacienteController(MethodView):
                 "response": "Paciente creado correctamente"
             }), 201)
 
-        except sqlalchemy.exc.IntegrityError as e:
-            print(e.hide_parameters)
+        except IntegrityError as e:
             return make_response(jsonify({
                 "status": 409,
                 "response": "El documento y/o el correo ya se encuentran registrados."

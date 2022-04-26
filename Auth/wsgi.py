@@ -15,4 +15,4 @@ with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
-    app.run(APP.HOST, APP.PORT, APP.DEBUG)
+    app.run(host=APP.HOST, port=APP.PORT, debug=APP.DEBUG)

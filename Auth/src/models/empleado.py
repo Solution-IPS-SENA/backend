@@ -1,7 +1,6 @@
 from src.utils.db import db
 from datetime import datetime
-
-datetime_format = '%Y-%m-%dT%H:%M:%S'
+from src.config import APP
 
 class Empleado(db.Model):
     documento = db.Column(db.String(20), primary_key=True)
@@ -22,8 +21,8 @@ class Empleado(db.Model):
     password = db.Column(db.String(200), nullable=False)
     rol = db.Column(db.String(20), nullable=False)
     foto = db.Column(db.String(150), nullable=True)
-    join_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow().strftime(datetime_format))
-    last_login = db.Column(db.DateTime, nullable=False, default=datetime.utcnow().strftime(datetime_format))
+    join_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow().strftime(APP.DATETIME_FORMAT))
+    last_login = db.Column(db.DateTime, nullable=False, default=datetime.utcnow().strftime(APP.DATETIME_FORMAT))
 
     def __init__(
         self, documento, tipo_documento, nombres,  apellidos,
