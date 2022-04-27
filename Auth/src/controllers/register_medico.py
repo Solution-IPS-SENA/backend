@@ -5,11 +5,14 @@ from src.utils.db import db
 from bcrypt import hashpw, gensalt
 from src.validators import register_medico_validator
 import sqlalchemy
+from src.midlewares import verify_rol
  
 class RegisterMedicoController(MethodView):
 
+    decorators = [verify_rol]
+
     def __init__(self):
-        self.validator = register_medico_validator.CreateRegisterPacienteSchema()
+        self.validator = register_medico_validator.CreateRegisterMedicoSchema()
 
     def post(self):
         if not request.is_json:

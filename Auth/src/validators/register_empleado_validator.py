@@ -12,7 +12,7 @@ class CreateRegisterEmpleadoSchema(Schema):
     genero = fields.Str(required=True, validate=validate.ContainsOnly(['M', 'F']))
     direccion = fields.Str(required=True, validate=validate.Length(min=1, max=100))
     telefono = fields.Str(required=True, validate=validate.Length(min=1, max=30))
-    salario = fields.Integer(required=True)
+    salario = fields.Number(required=True)
     arl = fields.Str(required=True)
     eps = fields.Str(required=True)
     afp = fields.Str(required=True)

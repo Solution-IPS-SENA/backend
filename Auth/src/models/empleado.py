@@ -13,7 +13,7 @@ class Empleado(db.Model):
     genero = db.Column(db.String(1), nullable=False)
     direccion = db.Column(db.String(150), nullable=False)
     telefono = db.Column(db.String(30), nullable=False)
-    salario = db.COlumn(db.Numeric, nullable=False)
+    salario = db.Column(db.Numeric, nullable=False)
     arl = db.Column(db.String(45), nullable=False)
     eps = db.Column(db.String(45), nullable=False)
     afp = db.Column(db.String(45), nullable=False)

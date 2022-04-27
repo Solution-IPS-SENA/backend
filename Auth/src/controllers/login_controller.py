@@ -1,10 +1,12 @@
 from flask import request, make_response, jsonify
-from flask.views import MethodView
-from src.models.paciente import Paciente
-import jwt
-from bcrypt import checkpw
 from src.validators import login_validator
+from src.models.paciente import Paciente
+from src.models.empleado import Empleado
+from src.models.medico import Medico
+from flask.views import MethodView
 from src.config import KEYS
+from bcrypt import checkpw
+import jwt
  
 class LoginController(MethodView):
 
@@ -27,15 +29,22 @@ class LoginController(MethodView):
                 "errors": errors
             }), 400)
 
-        paciente = Paciente.query.filter_by(correo=content.get('correo')).first()
+        tipos_usuario = [Paciente, Empleado, Medico]
+        usuario_encontrado = False
+
+        for i in range(len(tipos_usuario)):
+            usuario = tipos_usuario[i].query.filter_by(correo=content.get('correo')).first()
+            if usuario is not None:
+                usuario_encontrado = True
+                break;
         
-        if paciente is None:
+        if not usuario_encontrado:
             return make_response(jsonify({
-                "status": 422,
-                "response": "El usuario no está registrado."
-            }), 422)
+                    "status": 422,
+                    "response": "El usuario no está registrado."
+                }), 422)
             
-        db_pass = bytes(paciente.password, 'utf8')
+        db_pass = bytes(usuario.password, 'utf8')
         pass_bytes = bytes(content.get("password"), 'utf8')
         
         if not checkpw(pass_bytes, db_pass):
@@ -46,9 +55,9 @@ class LoginController(MethodView):
 
         token = jwt.encode(
                 {
-                    "correo": paciente.correo,
-                    "documento": paciente.documento,
-                    "rol": paciente.rol
+                    "correo": usuario.correo,
+                    "documento": usuario.documento,
+                    "rol": "EMPLEADO"
                 }, KEYS.JWT, "HS256")
         
         token = bytes.decode(token, 'utf8')

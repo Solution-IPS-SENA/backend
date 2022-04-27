@@ -5,11 +5,12 @@ from src.utils.db import db
 from bcrypt import hashpw, gensalt
 from src.validators import register_empleado_validator
 from sqlalchemy.exc import IntegrityError
+from midlewares import verify_rol
  
-class RegisterPacienteController(MethodView):
+class RegisterEmpleadoController(MethodView):
 
     def __init__(self):
-        self.validator = register_empleado_validator.CreateRegisterPacienteSchema()
+        self.validator = register_empleado_validator.CreateRegisterEmpleadoSchema()
 
     def post(self):
         if not request.is_json:
