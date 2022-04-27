@@ -27,12 +27,3 @@ def verify_rol(func):
                 "response": "Envie un header con un token de autorización"
             }), 417)
     return wrapped
-
-
-def hola(func):
-    @wraps(func)
-    def wrapped(*args, **kwargs):
-        print("Entro al segundo decorator.")
-        return func(*args, **kwargs)
-                
-    return wrapped

@@ -5,8 +5,11 @@ from src.utils.db import db
 from bcrypt import hashpw, gensalt
 from src.validators.register_paciente_validator import CreateRegisterPacienteSchema
 from sqlalchemy.exc import IntegrityError
+from src.midlewares import verify_rol
  
 class RegisterPacienteController(MethodView):
+
+    decorator = [verify_rol]
 
     def __init__(self):
         self.validator = CreateRegisterPacienteSchema()
