@@ -1,9 +1,11 @@
-from src.utils.db import db
-from datetime import datetime
-from src.config import APP
+from src.utils.instances import db
+from src.utils.functions import time
 
-class Empleado(db.Model):
-    documento = db.Column(db.String(20), primary_key=True)
+class Paciente(db.Model):
+
+    __tablename__ = 'pacientes'
+
+    documento = db.Column(db.String(12), primary_key=True)
     tipo_documento = db.Column(db.String(2), nullable=False)
     nombres = db.Column(db.String(100), nullable=False)
     apellidos = db.Column(db.String(100), nullable=False)
@@ -11,24 +13,29 @@ class Empleado(db.Model):
     lugar_nacimiento = db.Column(db.String(3), nullable=False)
     nacionalidad = db.Column(db.String(3), nullable=False)
     genero = db.Column(db.String(1), nullable=False)
-    direccion = db.Column(db.String(150), nullable=False)
-    telefono = db.Column(db.String(30), nullable=False)
-    salario = db.Column(db.Numeric, nullable=False)
-    arl = db.Column(db.String(45), nullable=False)
-    eps = db.Column(db.String(45), nullable=False)
-    afp = db.Column(db.String(45), nullable=False)
+    direccion = db.Column(db.String(100), nullable=False)
+    telefono = db.Column(db.String(15), nullable=False)
+    empresa = db.Column(db.String(100), nullable=False)
+    cargo = db.Column(db.String(50), nullable=False)
+    fecha_ingreso = db.Column(db.Date, nullable=False)
+    tiempo_cargo = db.Column(db.String(100), nullable=False)
+    arl = db.Column(db.String(100), nullable=False)
+    eps = db.Column(db.String(100), nullable=False)
+    afp = db.Column(db.String(100), nullable=False)
+    telefono_empresa = db.Column(db.String(45), nullable=False)
     correo = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
     rol = db.Column(db.String(20), nullable=False)
     foto = db.Column(db.String(150), nullable=True)
-    join_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow().strftime(APP.DATETIME_FORMAT))
-    last_login = db.Column(db.DateTime, nullable=False, default=datetime.utcnow().strftime(APP.DATETIME_FORMAT))
+    join_at = db.Column(db.DateTime, nullable=False, default=time())
+    last_login = db.Column(db.DateTime, nullable=False, default=time())
 
     def __init__(
-        self, documento, tipo_documento, nombres,  apellidos,
-        fecha_nacimiento, lugar_nacimiento, nacionalidad, 
-        genero, direccion, telefono, salario, arl, eps, afp, 
-        correo, password, rol, foto = None
+            self, documento, tipo_documento, nombres,  apellidos,
+            fecha_nacimiento, lugar_nacimiento, nacionalidad, 
+            genero, direccion, telefono, empresa, cargo, fecha_ingreso,
+            tiempo_cargo, arl, eps, afp, telefono_empresa, correo,
+            password, rol, foto = None
         ):
         self.documento = documento
         self.tipo_documento = tipo_documento
@@ -40,17 +47,21 @@ class Empleado(db.Model):
         self.genero = genero
         self.direccion = direccion
         self.telefono = telefono
-        self.salario = salario
+        self.empresa = empresa
+        self.cargo = cargo
+        self.fecha_ingreso = fecha_ingreso
+        self.tiempo_cargo = tiempo_cargo
         self.arl = arl
         self.eps = eps
         self.afp = afp
+        self.telefono_empresa = telefono_empresa
         self.correo = correo
         self.password = password
         self.rol = rol
         self.foto = foto
 
     def __str__(self):
-        return f"""EMPELADO:
+        return f"""PACIENTE:
     documento = {self.documento}
     tipo_documento = {self.tipo_documento}
     nombres = {self.nombres}
@@ -60,10 +71,15 @@ class Empleado(db.Model):
     nacionalidad = {self.nacionalidad}
     genero = {self.genero}
     direccion = {self.direccion}
-    salario = {self.salario}
+    telefono = {self.telefono}
+    empresa = {self.empresa}
+    cargo = {self.cargo}
+    fecha_ingreso = {self.fecha_ingreso}
+    tiempo_cargo = {self.tiempo_cargo}
     arl = {self.arl}
     eps = {self.eps}
     afp = {self.afp}
+    telefono_empresa = {self.telefono_empresa}
     correo = {self.correo}
     password = {self.password}
     rol = {self.rol}

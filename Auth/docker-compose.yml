@@ -1,7 +1,7 @@
 version: "3"
 services:
   db:
-    image: mysql
+    image: mysql:8
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: auth
@@ -9,5 +9,5 @@ services:
       - "3306:3306"
     restart: always
     command: --default-authentication-plugin=mysql_native_password
-    volumes:
-      - ./db_data:/var/lib/mysql
+#    volumes:
+#      - ./db_data:/var/lib/mysql

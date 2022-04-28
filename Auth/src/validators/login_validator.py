@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields
-from marshmallow import validate, ValidationError
+from marshmallow import validate
 
 class CreateLoginSchema(Schema):
     correo = fields.Str(required=True, validate=validate.Email())

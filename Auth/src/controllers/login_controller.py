@@ -1,13 +1,13 @@
+from src.models import empleado_model, paciente_model, medico_model
 from flask import request, make_response, jsonify
 from src.validators import login_validator
-from src.models.paciente import Paciente
-from src.models.empleado import Empleado
-from src.models.medico import Medico
+from src.utils.functions import time
 from flask.views import MethodView
+from src.utils.instances import db
 from src.config import KEYS
 from bcrypt import checkpw
 import jwt
- 
+
 class LoginController(MethodView):
 
     def __init__(self):
@@ -29,7 +29,11 @@ class LoginController(MethodView):
                 "errors": errors
             }), 400)
 
-        tipos_usuario = [Paciente, Empleado, Medico]
+        tipos_usuario = [
+            medico_model.Medico, 
+            empleado_model.Empleado, 
+            paciente_model.Paciente
+        ]
         usuario_encontrado = False
 
         for i in range(len(tipos_usuario)):
@@ -53,11 +57,14 @@ class LoginController(MethodView):
                 "response": "La contraseña es incorrecta."
             }), 406)
 
+        usuario.last_login = time()
+        db.session.commit()
+
         token = jwt.encode(
                 {
                     "correo": usuario.correo,
                     "documento": usuario.documento,
-                    "rol": "EMPLEADO"
+                    "rol": usuario.documento
                 }, KEYS.JWT, "HS256")
         
         token = bytes.decode(token, 'utf8')

@@ -1,36 +1,11 @@
-from flask import request, make_response, jsonify
-from flask.views import MethodView
-from src.models.paciente import Paciente
-from src.utils.db import db
-from bcrypt import hashpw, gensalt
-from src.validators.register_paciente_validator import CreateRegisterPacienteSchema
 from sqlalchemy.exc import IntegrityError
-from src.midlewares import verify_rol
- 
-class RegisterPacienteController(MethodView):
+from bcrypt import hashpw, gensalt
+from src.models.paciente_model import Paciente
+from src.utils.instances import db
 
-    decorator = [verify_rol]
+class PacienteService():
 
-    def __init__(self):
-        self.validator = CreateRegisterPacienteSchema()
-
-    def post(self):
-        if not request.is_json:
-            return make_response(jsonify({
-                "status": 400,
-                "response": "No se ha recibido un json."
-            }), 400)
-            
-        content = request.get_json()
-
-        errors = self.validator.validate(content)
-        
-        if errors:
-            return make_response(jsonify({
-                "status": 400,
-                "response": errors
-            }), 400)
-
+    def add(self, content):
         try:
             db.session.add(
                 Paciente(
@@ -60,20 +35,24 @@ class RegisterPacienteController(MethodView):
             )
             db.session.commit()
 
-            return make_response(jsonify({
-                "status": 201,
-                "response": "Paciente creado correctamente"
-            }), 201)
+            return (
+                {
+                    "response": "Paciente creado correctamente"
+                },
+                201)
 
         except IntegrityError as e:
-            return make_response(jsonify({
-                "status": 409,
-                "response": "El documento y/o el correo ya se encuentran registrados."
-            }), 409)
+            db.session.rollback()
+            return (
+                {
+                    "response": "El documento y/o el correo ya se encuentran registrados."
+                },
+                409)
         
         except Exception as e:
-            return make_response(jsonify({
-                "status": 400,
-                "response": str(e)
-            }), 400)
-
+            db.session.rollback()
+            return (
+                {
+                    "response": str(e),
+                },
+                400)

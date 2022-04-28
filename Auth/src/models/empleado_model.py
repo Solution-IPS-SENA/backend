@@ -1,38 +1,36 @@
-from src.utils.db import db
-from datetime import datetime
+from src.utils.instances import db
+from src.utils.functions import time
 
-datetime_format = '%Y-%m-%dT%H:%M:%S'
+class Empleado(db.Model):
 
-class Medico(db.Model):
+    __tablename__ = 'empleados'
+
+    documento = db.Column(db.String(20), primary_key=True)
     tipo_documento = db.Column(db.String(2), nullable=False)
-    documento = db.Column(db.String(12), primary_key=True)
     nombres = db.Column(db.String(100), nullable=False)
     apellidos = db.Column(db.String(100), nullable=False)
     fecha_nacimiento = db.Column(db.Date, nullable=False)
     lugar_nacimiento = db.Column(db.String(3), nullable=False)
     nacionalidad = db.Column(db.String(3), nullable=False)
     genero = db.Column(db.String(1), nullable=False)
-    direccion = db.Column(db.String(100), nullable=False)
-    telefono = db.Column(db.String(15), nullable=False)
+    direccion = db.Column(db.String(150), nullable=False)
+    telefono = db.Column(db.String(30), nullable=False)
     salario = db.Column(db.Numeric, nullable=False)
-    tp = db.Column(db.String(30), nullable=False)
-    arl = db.Column(db.String(100), nullable=False)
-    eps = db.Column(db.String(100), nullable=False)
-    afp = db.Column(db.String(100), nullable=False)
-    rethus = db.Column(db.String(45), nullable=False)
-    secretaria_salud = db.Column(db.String(100), nullable=False)
+    arl = db.Column(db.String(45), nullable=False)
+    eps = db.Column(db.String(45), nullable=False)
+    afp = db.Column(db.String(45), nullable=False)
     correo = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
     rol = db.Column(db.String(20), nullable=False)
     foto = db.Column(db.String(150), nullable=True)
-    join_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow().strftime(datetime_format))
-    last_login = db.Column(db.DateTime, nullable=False, default=datetime.utcnow().strftime(datetime_format))
+    join_at = db.Column(db.DateTime, nullable=False, default=time())
+    last_login = db.Column(db.DateTime, nullable=False, default=time())
 
     def __init__(
-        self, documento, tipo_documento, nombres,  apellidos,
-        fecha_nacimiento, lugar_nacimiento, nacionalidad, 
-        genero, direccion, telefono, salario, tp, arl, eps, afp,
-        rethus, secretaria_salud, correo, password, rol, foto = None
+            self, documento, tipo_documento, nombres,  apellidos,
+            fecha_nacimiento, lugar_nacimiento, nacionalidad, 
+            genero, direccion, telefono, salario, arl, eps, afp, 
+            correo, password, rol, foto = None
         ):
         self.documento = documento
         self.tipo_documento = tipo_documento
@@ -45,9 +43,6 @@ class Medico(db.Model):
         self.direccion = direccion
         self.telefono = telefono
         self.salario = salario
-        self.tp = tp
-        self.rethus = rethus
-        self.secretaria_salud = secretaria_salud
         self.arl = arl
         self.eps = eps
         self.afp = afp
@@ -57,7 +52,7 @@ class Medico(db.Model):
         self.foto = foto
 
     def __str__(self):
-        return f"""MEDICO:
+        return f"""EMPELADO:
     documento = {self.documento}
     tipo_documento = {self.tipo_documento}
     nombres = {self.nombres}
@@ -67,11 +62,7 @@ class Medico(db.Model):
     nacionalidad = {self.nacionalidad}
     genero = {self.genero}
     direccion = {self.direccion}
-    telefono = {self.telefono}
     salario = {self.salario}
-    tp = {self.tp}
-    rethus = {self.rethus}
-    secretaria_salud = {self.secretaria_salud}
     arl = {self.arl}
     eps = {self.eps}
     afp = {self.afp}
