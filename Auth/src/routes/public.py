@@ -1,7 +1,7 @@
 from src.controllers.register_controller import RegisterPacienteController,\
                                                 RegisterMedicoController,\
-                                                RegisterEmpleadoController#,\
-                                                #RegisterEmpresaController
+                                                RegisterEmpleadoController,\
+                                                RegisterEmpresaController
 from src.controllers.login_controller import LoginController
 
 version = "/api/v01"
@@ -11,7 +11,7 @@ register: dict = {
     "paciente": f"{register_base}/paciente", "paciente_controller": RegisterPacienteController.as_view("paciente"),
     "medico": f"{register_base}/medico", "medico_controller": RegisterMedicoController.as_view("medico"),
     "empleado": f"{register_base}/empleado", "empleado_controller": RegisterEmpleadoController.as_view("empleado"),
-    # "empresa": f"{register_base}/empresa", "empresa_controller": RegisterEmpresaController.as_view("empresa")
+    "empresa": f"{register_base}/empresa", "empresa_controller": RegisterEmpresaController.as_view("empresa")
 }
 
 # Controladores y rutas de inicio de sesion.

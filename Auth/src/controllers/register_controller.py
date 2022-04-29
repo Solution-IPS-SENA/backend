@@ -1,24 +1,10 @@
-from src.services import empleado_service, medico_service, paciente_service
+from src.services import empleado_service, medico_service, paciente_service, empresa_service
+from src.middlewares.request_middleware import json_input
+from src.middlewares.token_middleware import verify_rol
+from src.utils.functions import validate_input
 from flask import request, make_response, jsonify
 from src.validators import register_validator
-from src.middlewares.token_middleware import verify_rol
 from flask.views import MethodView
-
-def validate_data(sender):
-    if not request.is_json:
-            return make_response(jsonify({
-                "status": 400,
-                "response": "No se ha recibido un json."
-            }), 400)
-    content = request.get_json()
-    errors = sender.validator.validate(content)
-    if errors:
-        return make_response(jsonify({
-            "status": 400,
-            "response": errors
-        }), 400)
-    
-    return content
 
 class RegisterPacienteController(MethodView):
 
@@ -28,10 +14,14 @@ class RegisterPacienteController(MethodView):
         self.validator = register_validator.CreateRegisterPacienteSchema()
         self.service = paciente_service.PacienteService()
 
+    @json_input
     def post(self):
-        content = validate_data(self)
-        response, status = self.service.add(content)
-        return make_response(jsonify(response), status)
+        content, valido = validate_input(self, request.get_json())
+        if valido:
+            response, status = self.service.add(content)
+            return make_response(jsonify(response), status)
+        return content
+        
 
 class RegisterMedicoController(MethodView):
 
@@ -41,11 +31,29 @@ class RegisterMedicoController(MethodView):
         self.validator = register_validator.CreateRegisterMedicoSchema()
         self.service = medico_service.MedicoService()
 
+    @json_input
     def post(self):
-        content = validate_data(self)
-        response, status = self.service.add(content)
-        return make_response(jsonify(response), status)
+        content, valido = validate_input(self, request.get_json())
+        if valido:
+            response, status = self.service.add(content)
+            return make_response(jsonify(response), status)
+        return content
 
+class RegisterEmpresaController(MethodView):
+    
+    decorators = [verify_rol]
+
+    def __init__(self):
+        self.validator = register_validator.CreateRegisterEmpresaSchema()
+        self.service = empresa_service.EmpresaService()
+    
+    @json_input
+    def post(self):
+        content, valido = validate_input(self, request.get_json())
+        if valido:
+            response, status = self.service.add(content)
+            return make_response(jsonify(response), status)
+        return content
 
 class RegisterEmpleadoController(MethodView):
 
@@ -53,7 +61,10 @@ class RegisterEmpleadoController(MethodView):
         self.validator = register_validator.CreateRegisterEmpleadoSchema()
         self.service = empleado_service.EmpleadoService()
 
+    @json_input
     def post(self):
-        content = validate_data(self)
-        response, status = self.service.add(content)
-        return make_response(jsonify(response), status)
+        content, valido = validate_input(self, request.get_json())
+        if valido:
+            response, status = self.service.add(content)
+            return make_response(jsonify(response), status)
+        return content

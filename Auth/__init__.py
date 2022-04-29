@@ -30,6 +30,7 @@ app.add_url_rule(auth["login"], view_func=auth["login_controller"])
 app.add_url_rule(register["paciente"], view_func=register["paciente_controller"])
 app.add_url_rule(register["medico"], view_func=register["medico_controller"])
 app.add_url_rule(register["empleado"], view_func=register["empleado_controller"])
+app.add_url_rule(register["empresa"], view_func=register["empresa_controller"])
 
 @app.errorhandler(404)
 def notFound(e):

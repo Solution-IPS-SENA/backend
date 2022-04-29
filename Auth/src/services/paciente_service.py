@@ -29,7 +29,6 @@ class PacienteService():
                     telefono_empresa = content.get('telefono_empresa'),
                     correo = content.get('correo'),
                     password = bytes.decode(hashpw(bytes(content.get('password'), encoding='utf8'), gensalt()), encoding='utf-8'),
-                    rol = content.get('rol'),
                     foto = content.get('foto')
                 )
             )

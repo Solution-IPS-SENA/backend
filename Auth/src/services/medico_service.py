@@ -1,8 +1,7 @@
 from sqlalchemy.exc import IntegrityError
-from bcrypt import hashpw, gensalt
 from src.models.medico_model import Medico
+from bcrypt import hashpw, gensalt
 from src.utils.instances import db
-
 
 class MedicoService():
 
@@ -28,9 +27,7 @@ class MedicoService():
                     eps=content.get('eps'),
                     afp=content.get('afp'),
                     correo=content.get('correo'),
-                    password=bytes.decode(hashpw(
-                        bytes(content.get('password'), encoding='utf8'), gensalt()), encoding='utf-8'),
-                    rol=content.get('rol'),
+                    password=bytes.decode(hashpw(bytes(content.get('password'), encoding='utf8'), gensalt()), encoding='utf-8'),
                     foto=content.get('foto')
                 )
             )

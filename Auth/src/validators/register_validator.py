@@ -35,3 +35,10 @@ class CreateRegisterPacienteSchema(BaseSchema, Schema):
     fecha_ingreso = fields.Date(required=True)
     tiempo_cargo = fields.Str(required=True)
     telefono_empresa = fields.Str(required=True, validate=validate.Length(min=1, max=45))
+
+class CreateRegisterEmpresaSchema(Schema):
+    nombre = fields.Str(required=True, validate=validate.Length(min=1, max=100))
+    nit = fields.Str(required=True, validate=validate.Length(min=1, max=10))
+    telefono = fields.Str(required=True, validate=validate.Length(min=1, max=15))
+    correo = fields.Str(required=True, validate=validate.Email())
+    direccion = fields.Str(required=True, validate=validate.Length(min=1, max=100))
