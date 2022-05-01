@@ -10,6 +10,7 @@ class Empresa(db.Model):
     telefono = db.Column(db.String(15), nullable=False)
     correo = db.Column(db.String(150), nullable=False, unique=True)
     direccion = db.Column(db.String(100), nullable=False)
+    rol = db.Column(db.String(20), nullable=False, default="EMPRESA")
     join_at = db.Column(db.DateTime, nullable=False, default=time())
     last_login = db.Column(db.DateTime, nullable=False, default=time())
 

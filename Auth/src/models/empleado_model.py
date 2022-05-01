@@ -21,7 +21,7 @@ class Empleado(db.Model):
     afp = db.Column(db.String(45), nullable=False)
     correo = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    rol = db.Column(db.String(20), nullable=False)
+    rol = db.Column(db.String(20), nullable=False, default="EMPLEADO")
     foto = db.Column(db.String(150), nullable=True)
     join_at = db.Column(db.DateTime, nullable=False, default=time())
     last_login = db.Column(db.DateTime, nullable=False, default=time())
@@ -30,7 +30,7 @@ class Empleado(db.Model):
             self, documento, tipo_documento, nombres,  apellidos,
             fecha_nacimiento, lugar_nacimiento, nacionalidad, 
             genero, direccion, telefono, salario, arl, eps, afp, 
-            correo, password, rol, foto = None
+            correo, password, foto = None
         ):
         self.documento = documento
         self.tipo_documento = tipo_documento
@@ -48,7 +48,6 @@ class Empleado(db.Model):
         self.afp = afp
         self.correo = correo
         self.password = password
-        self.rol = rol
         self.foto = foto
 
     def __str__(self):
@@ -68,5 +67,4 @@ class Empleado(db.Model):
     afp = {self.afp}
     correo = {self.correo}
     password = {self.password}
-    rol = {self.rol}
     foto = {self.foto}"""

@@ -3,22 +3,27 @@ from functools import wraps
 from jwt import decode
 from src.config import KEYS
 
-def verify_token(func):
+def verify_rol(func):
     @wraps(func)
     def wrapped(*args, **kwargs):
         token: str = request.headers.get('Authorization')
         if token:
             try:
-                decode(token, KEYS.JWT, algorithms=["HS256"])
-                return func(*args, **kwargs)
+                decodificado = decode(token, KEYS.JWT, algorithms=["HS256"])
+                if decodificado["rol"] in ["MEDICO", "EMPLEADO"]:
+                    return func(*args, **kwargs)
+                return make_response(jsonify({
+                    "statusCode": 401,
+                    "response": "Permisos insuficientes",
+                }), 401)
             except Exception as e:
                 return make_response(jsonify({
                     "statusCode": 498,
-                    "response": "Token verification failed",
+                    "response": "Verificacion de token fallida",
                     "error": str(e)
                 }), 498)
         return make_response(jsonify({
                 "statusCode": 417,
-                "response": "Send a header with a Authorization key"
+                "response": "Envie un header con un token de autorización"
             }), 417)
     return wrapped

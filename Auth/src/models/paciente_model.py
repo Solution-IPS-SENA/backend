@@ -25,7 +25,7 @@ class Paciente(db.Model):
     telefono_empresa = db.Column(db.String(45), nullable=False)
     correo = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    rol = db.Column(db.String(20), nullable=False)
+    rol = db.Column(db.String(20), nullable=False, default="PACIENTE")
     foto = db.Column(db.String(150), nullable=True)
     join_at = db.Column(db.DateTime, nullable=False, default=time())
     last_login = db.Column(db.DateTime, nullable=False, default=time())
@@ -35,7 +35,7 @@ class Paciente(db.Model):
             fecha_nacimiento, lugar_nacimiento, nacionalidad, 
             genero, direccion, telefono, empresa, cargo, fecha_ingreso,
             tiempo_cargo, arl, eps, afp, telefono_empresa, correo,
-            password, rol, foto = None
+            password, foto = None
         ):
         self.documento = documento
         self.tipo_documento = tipo_documento
@@ -57,7 +57,6 @@ class Paciente(db.Model):
         self.telefono_empresa = telefono_empresa
         self.correo = correo
         self.password = password
-        self.rol = rol
         self.foto = foto
 
     def __str__(self):
@@ -82,5 +81,4 @@ class Paciente(db.Model):
     telefono_empresa = {self.telefono_empresa}
     correo = {self.correo}
     password = {self.password}
-    rol = {self.rol}
     foto = {self.foto}"""

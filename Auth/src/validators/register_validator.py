@@ -1,12 +1,13 @@
 from marshmallow import Schema, fields
 from marshmallow import validate
+from src.config import APP
 
 class BaseSchema():
     documento = fields.Str(required=True, validate=validate.Length(min=1, max=20))
     tipo_documento = fields.Str(required=True, validate=lambda x: True if x in ["CC", "TI", "RC", "CE", "CD"] else False)
     nombres = fields.Str(required=True, validate=validate.Length(max=200))
     apellidos = fields.Str(required=True, validate=validate.Length(max=200))
-    fecha_nacimiento = fields.Date(required=True)
+    fecha_nacimiento = fields.DateTime(required=True, format=APP.DATE_FORMAT)
     lugar_nacimiento = fields.Str(required=True, validate=validate.Length(equal=3))
     nacionalidad = fields.Str(required=True, validate=validate.Length(equal=3))
     genero = fields.Str(required=True, validate=validate.ContainsOnly(['M', 'F']))

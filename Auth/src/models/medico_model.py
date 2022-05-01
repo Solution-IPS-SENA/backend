@@ -24,7 +24,7 @@ class Medico(db.Model):
     secretaria_salud = db.Column(db.String(100), nullable=False)
     correo = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    rol = db.Column(db.String(20), nullable=False)
+    rol = db.Column(db.String(20), nullable=False, default="MEDICO")
     foto = db.Column(db.String(150), nullable=True)
     join_at = db.Column(db.DateTime, nullable=False, default=time())
     last_login = db.Column(db.DateTime, nullable=False, default=time())
@@ -33,7 +33,7 @@ class Medico(db.Model):
             self, documento, tipo_documento, nombres,  apellidos,
             fecha_nacimiento, lugar_nacimiento, nacionalidad, 
             genero, direccion, telefono, salario, tp, arl, eps, afp,
-            rethus, secretaria_salud, correo, password, rol, foto = None
+            rethus, secretaria_salud, correo, password, foto = None
         ):
         self.documento = documento
         self.tipo_documento = tipo_documento
@@ -54,7 +54,6 @@ class Medico(db.Model):
         self.afp = afp
         self.correo = correo
         self.password = password
-        self.rol = rol
         self.foto = foto
 
     def __str__(self):

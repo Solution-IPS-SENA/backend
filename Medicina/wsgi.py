@@ -1,18 +1,14 @@
-from dotenv import load_dotenv
-
-load_dotenv()
-
-from src.app import Aplication
-from src.utils.db import db
-from src.config import APP
-from flask_sqlalchemy import SQLAlchemy
-
-app = Aplication.create_app()
-
-SQLAlchemy(app)
-
-with app.app_context():
-    db.create_all()
+from __init__ import app
+from src.utils.instances import db
 
 if __name__ == '__main__':
-    app.run(APP.HOST, APP.PORT, APP.DEBUG)
+    
+    try:
+        db.init_app(app)
+
+        with app.app_context():
+            db.create_all()
+        app.run(**app.config["RUN_CONFIG"])
+
+    except Exception as e:
+        print(f"Error starting server: {e}")
