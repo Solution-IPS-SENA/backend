@@ -3,7 +3,7 @@ from marshmallow import validate
 from src.models import anexos
 from src.config import APP
 
-class CreateLoginSchema(Schema):
+class HistoriaMedicaSchema(Schema):
     documento_paciente = fields.Str(required=True, validate=validate.Length(min=1, max=20))
     ant_padre_card = fields.Str(required=True, validate=lambda x: x in anexos.ANTECEDENTES_FAMILIARES)
     ant_madre_card = fields.Str(required=True, validate=lambda x: x in anexos.ANTECEDENTES_FAMILIARES)

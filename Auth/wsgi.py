@@ -1,5 +1,8 @@
-from __init__ import app
+import __init__
+from src.app import Application
 from src.utils.instances import db
+
+app = Application.create_app()
 
 if __name__ == '__main__':
     
