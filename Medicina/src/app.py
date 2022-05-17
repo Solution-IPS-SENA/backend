@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
-from src.routes.public import auth, register
-from src.config import APP, DB
+from src.routes.public import routes
+from src.config import APP, DB, REDIS
 
 class Application():
 
@@ -13,9 +13,11 @@ class Application():
 
     @classmethod
     def __configure(cls):
-    # Configuración de la base de datos
+        # Configuración de la base de datos
         cls.app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql+pymysql://{DB.USER}:{DB.PASS}@{DB.HOST}:{DB.PORT}/{DB.NAME}'
         cls.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        # Configuración de redis
+        cls.app.config["REDIS_URL"] = f"redis://:@{REDIS.HOST}:{REDIS.PORT}/{REDIS.DB_NUMBER}"
         # Configuración de arranque
         cls.app.config["RUN_CONFIG"] = dict(host=APP.HOST, port=APP.PORT, debug=APP.DEBUG)
 
@@ -27,3 +29,7 @@ class Application():
         }, supports_credentials=True)
 
         cls.__register_routes()
+
+    @classmethod
+    def __register_routes(cls):
+        cls.app.add_url_rule(routes["historia_medica"], view_func=routes["historia_medica_controller"], methods=["GET", "POST"])

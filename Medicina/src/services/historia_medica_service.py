@@ -1,16 +1,17 @@
 from src.models.medicina_model import HistoriaMedica
-from src.utils.instances import db
+from src.utils.instances import db, rd
 from sqlalchemy.exc import IntegrityError
 
 class HistoriaMedicaService():
 
     def create(self, content):
 
-        existente = self.get(content.get("doc"))
-
+        documento = content.get("documento_paciente")
+        encontrado = rd.hgetall(f"documento_paciente:{documento}")
+        if encontrado:
+            pass
         try:
-            HistoriaMedica(
-                documento_paciente = content.get("documento_paciente"),
+            data = dict(
                 ant_padre_card = content.get("ant_padre_card"),
                 ant_madre_card = content.get("ant_madre_card"),
                 ant_padre_cong = content.get("ant_padre_cong"),
@@ -122,6 +123,8 @@ class HistoriaMedicaService():
                 cie_obs = content.get("cie_obs"),
                 cie_concep_fin = content.get("cie_concep_fin")
             )
+            HistoriaMedica(documento_paciente=documento, **data)
+            
         except IntegrityError as e:
             db.session.rollback()
             return (
@@ -141,3 +144,5 @@ class HistoriaMedicaService():
     def get(self, doc):
         historia = HistoriaMedica.query.filter_by(documento_paciente=doc)
         
+    def update(self):
+        pass

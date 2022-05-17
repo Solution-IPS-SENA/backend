@@ -9,6 +9,11 @@ class DB():
     NAME = getenv("DB_NAME")
     PORT = int(getenv("DB_PORT"))
 
+class REDIS():  
+    HOST = getenv("REDIS_HOST", "localhost")
+    PORT = int(getenv("REDIS_PORT", 6379))
+    DB_NUMBER = int(getenv("REDIS_DB", 0))
+
 class APP():
     HOST = getenv("APP_HOST", "localhost")
     PORT = int(getenv("APP_PORT", "3000"))
