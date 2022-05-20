@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from src.routes.public import routes
 from src.config import APP, DB, REDIS
+from src.services.redis_service import RedisService
 
 class Application():
 
@@ -9,6 +10,7 @@ class Application():
     def create_app(cls):
         cls.app = Flask(__name__)
         cls.__configure()
+        cls.__register_routes()
         return cls.app
 
     @classmethod
@@ -28,8 +30,6 @@ class Application():
             }
         }, supports_credentials=True)
 
-        cls.__register_routes()
-
     @classmethod
     def __register_routes(cls):
-        cls.app.add_url_rule(routes["historia_medica"], view_func=routes["historia_medica_controller"], methods=["GET", "POST"])
+        cls.app.add_url_rule(routes["historia_medica"], view_func=routes["historia_medica_controller"], methods=["GET", "POST", "PUT"])

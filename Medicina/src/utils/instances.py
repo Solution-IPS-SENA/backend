@@ -3,4 +3,4 @@ from flask_redis import FlaskRedis
 from redis import Redis
 
 db: SQLAlchemy = SQLAlchemy()
-rd: Redis = FlaskRedis()
+rd: Redis = FlaskRedis(decode_responses=True)
