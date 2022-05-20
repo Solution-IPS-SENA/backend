@@ -1,10 +1,10 @@
 from src.models.historia_medica_model import HistoriaMedica
-from src.utils.instances import db, rd
-from sqlalchemy.exc import IntegrityError
+from src.utils.instances import db
+from sqlalchemy import select, desc
 
 class HistoriaMedicaService():
 
-    def create(self, content):
+    def create(self, content, nuevo_seguro=False):
         doc = content.get("documento_paciente")
         data = dict(
             documento_paciente=doc,
@@ -119,20 +119,27 @@ class HistoriaMedicaService():
             cie_obs = content.get("cie_obs"),
             cie_concep_fin = content.get("cie_concep_fin")
         )
-        encontrado = rd.hgetall(f"documento_paciente:{doc}")
-        if encontrado:
-            return self.update(content)  
-        try:
-            historia = HistoriaMedica(**data)
-            db.session.add(
-                historia
+        stmt = select(
+            HistoriaMedica.numero_historia
+            ).where(
+                HistoriaMedica.documento_paciente == doc
+            ).order_by(
+                desc(HistoriaMedica.numero_historia)
             )
+        encontrado = db.session.execute(stmt).fetchall()
+        if encontrado and not nuevo_seguro:
+            return self.update(content)
+        try:
+                
+            if encontrado and nuevo_seguro:
+                data["numero_historia"] = encontrado[0][0] + 1
+            historia = HistoriaMedica(**data)
+            db.session.add(historia)
             db.session.commit()
-            rd.hmset(f"documento_paciente:{doc}", historia.to_dict())
             return ({
                 "response": "Historia médica creada correctamente."
             }, 201)
-            
+
         except Exception as e:
             db.session.rollback()
             return ({
@@ -140,12 +147,12 @@ class HistoriaMedicaService():
             }, 400)
 
     def get(self, doc):
-        historia = rd.hgetall(f"documento_paciente:{doc}")
-        if historia:
-            historia["estado"] = bool(int(historia["estado"]))
-            historia["cie_concep_aplaza"] = bool(int(historia["cie_concep_aplaza"]))
+        historias = HistoriaMedica.query.filter_by(documento_paciente=doc).all()
+        data = [{x.to_dict().get("documento_paciente") + "-" + str(x.to_dict().get("numero_historia")):x.to_dict()} for x in historias]
         return ({
-            "response": historia
+            "response": {
+                "historias_clinicas": data
+            }
         }, 200)
     
     def update(self, content):
@@ -274,5 +281,5 @@ class HistoriaMedicaService():
         historia.cie_concep_fin = content.get("cie_concep_fin")
         db.session.commit()
         return ({
-            "response": "La historia médica se ha actualizada"
+            "response": "La historia médica se ha actualizado"
         }, 200)

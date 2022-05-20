@@ -10,7 +10,7 @@ if __name__ == '__main__':
         rd.init_app(app)
         with app.app_context():
             db.create_all()
-            RedisService.backup_from_db()
+            # RedisService.backup_from_db()
         app.run(**app.config["RUN_CONFIG"])
 
     except Exception as e:

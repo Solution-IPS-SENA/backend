@@ -4,7 +4,8 @@ from src.models.anexos import anexos
 class HistoriaMedica(db.Model):
     __tablename__ = 'historia_medica'
 
-    numero_historia = db.Column(db.Integer(), primary_key=True)
+    general_id = db.Column(db.Integer, primary_key=True)
+    numero_historia = db.Column(db.Integer, default=1)
     documento_paciente = db.Column(db.String(20), nullable=False)
     estado = db.Column(db.Boolean, nullable=False, default=True) # Estado abierto = True
     ant_padre_card = db.Column(db.String(50), nullable=False, default=anexos.ANTECEDENTES_FAMILIARES[0])
@@ -145,8 +146,10 @@ class HistoriaMedica(db.Model):
             ocu_equi, ocu_acti, ocu_acc_emp1, ocu_acc_diag1, ocu_acc_emp2,
             ocu_acc_diag2, ocu_obs, cie_concep_desc, cie_concep_reco,
             cie_concep_aplaz, cie_concep_aplaza, cie_concep_reco_mot,
-            cie_obs, cie_concep_fin
+            cie_obs, cie_concep_fin, numero_historia=False
         ):
+        if numero_historia:
+            self.numero_historia = numero_historia
         self.documento_paciente = documento_paciente
         self.ant_padre_card = ant_padre_card
         self.ant_madre_card = ant_madre_card
@@ -264,7 +267,7 @@ class HistoriaMedica(db.Model):
         return dict(
             numero_historia=self.numero_historia,
             documento_paciente=self.documento_paciente,
-            estado=int(self.estado),
+            estado=self.estado,
             ant_padre_card=self.ant_padre_card,
             ant_madre_card=self.ant_madre_card,
             ant_padre_cong=self.ant_padre_cong,
@@ -371,7 +374,7 @@ class HistoriaMedica(db.Model):
             cie_concep_desc=self.cie_concep_desc,
             cie_concep_reco=self.cie_concep_reco,
             cie_concep_aplaz=self.cie_concep_aplaz,
-            cie_concep_aplaza=int(self.cie_concep_aplaza),
+            cie_concep_aplaza=self.cie_concep_aplaza,
             cie_concep_reco_mot=self.cie_concep_reco_mot,
             cie_obs=self.cie_obs,
             cie_concep_fin=self.cie_concep_fin
