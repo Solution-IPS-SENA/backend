@@ -2,8 +2,8 @@ from flask import make_response, jsonify, request
 from datetime import date, datetime
 from src.config import APP
 
-def datetime(time = None):
-    return datetime.now().strftime(APP.DATETIME_FORMAT if time is not None else APP.DATE_FORMAT) 
+def get_datetime(dtime = True):
+    return datetime.now().strftime(APP.DATETIME_FORMAT if dtime else APP.DATE_FORMAT) 
 
 def validate_input(sender, content):
     errors = sender.validator.validate(content)

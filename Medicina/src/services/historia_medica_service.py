@@ -1,6 +1,7 @@
 from src.models.historia_medica_model import HistoriaMedica
 from src.utils.instances import db
 from sqlalchemy import select, desc
+from src.utils.functions import get_datetime
 
 class HistoriaMedicaService():
 
@@ -128,9 +129,14 @@ class HistoriaMedicaService():
             )
         encontrado = db.session.execute(stmt).fetchall()
         if encontrado and not nuevo_seguro:
-            return self.update(content)
+            return self.update(content, encontrado[0][0])
         try:
-                
+            if encontrado and nuevo_seguro:
+                abierta = HistoriaMedica.query.filter_by(numero_historia=encontrado[0][0]).first()
+                if abierta.estado:
+                    return ({
+                        "response": "No se puede crear una historia nueva para el documento dado porque la historia anterio se encuentra abierta"
+                    }, 400)
             if encontrado and nuevo_seguro:
                 data["numero_historia"] = encontrado[0][0] + 1
             historia = HistoriaMedica(**data)
@@ -155,12 +161,14 @@ class HistoriaMedicaService():
             }
         }, 200)
     
-    def update(self, content):
-        historia = HistoriaMedica.query.filter_by(documento_paciente=content.get("documento_paciente")).first()
-        
+    def update(self, content, num_historia):
+        if num_historia:
+            historia = HistoriaMedica.query.filter_by(documento_paciente=content.get("documento_paciente"), numero_historia=num_historia).first()
+        else:
+            historia = HistoriaMedica.query.filter_by(documento_paciente=content.get("documento_paciente")).first()
         if not historia:
             return ({
-                "response": "No existe una historia médica con ese documento."
+                "response": "No existe una historia médica con ese documento." if not num_historia else "No existe el número de historia para el documento indicado."
             }, 406)
 
         if not historia.estado:
@@ -279,6 +287,7 @@ class HistoriaMedicaService():
         historia.cie_concep_reco_mot = content.get("cie_concep_reco_mot")
         historia.cie_obs = content.get("cie_obs")
         historia.cie_concep_fin = content.get("cie_concep_fin")
+        historia.fecha_cierre = get_datetime()
         db.session.commit()
         return ({
             "response": "La historia médica se ha actualizado"

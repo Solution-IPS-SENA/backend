@@ -3,11 +3,18 @@ services:
   db:
     image: mysql:8
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: auth
+      MYSQL_ROOT_PASSWORD: solution
+      MYSQL_DATABASE: solution
     ports:
       - "3306:3306"
     restart: always
     command: --default-authentication-plugin=mysql_native_password
+    container_name: mysql
 #    volumes:
 #      - ./db_data:/var/lib/mysql
+  redis:
+    image: redis:6.2.6-alpine
+    ports:
+      - "6379:6379"
+    restart: always
+    container_name: redis

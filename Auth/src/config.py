@@ -19,3 +19,6 @@ class APP():
 
 class KEYS():
     JWT = getenv("JWT_KEY")
+
+class URLS():
+    ANEXOS = getenv("ANEXOS_URL")
