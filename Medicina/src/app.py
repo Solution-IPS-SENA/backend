@@ -2,7 +2,6 @@ from flask import Flask
 from flask_cors import CORS
 from src.routes.public import routes
 from src.config import APP, DB, REDIS
-from src.services.redis_service import RedisService
 
 class Application():
 

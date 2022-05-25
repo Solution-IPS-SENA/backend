@@ -1,4 +1,4 @@
-from src.services.redis_service import RedisService
+# from src.services.redis_service import RedisService
 from src.app import Application
 from src.utils.instances import db, rd
 

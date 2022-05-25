@@ -3,7 +3,7 @@ from src.models.anexos import anexos
 from src.utils.functions import get_datetime
 
 class HistoriaMedica(db.Model):
-    __tablename__ = 'historia_medica'
+    __tablename__ = 'medicina'
 
     general_id = db.Column(db.Integer, primary_key=True)
     numero_historia = db.Column(db.Integer, default=1)
