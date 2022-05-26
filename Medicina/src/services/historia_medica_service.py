@@ -5,10 +5,24 @@ from src.utils.functions import get_datetime
 
 class HistoriaMedicaService():
 
-    def create(self, content, nuevo_seguro=False):
+    def buscar_num_historia(self, doc):
+        stmt = select(
+            HistoriaMedica.numero_historia
+            ).where(
+                HistoriaMedica.documento_paciente == doc
+            ).order_by(
+                desc(HistoriaMedica.numero_historia)
+            )
+        historias = db.session.execute(stmt).fetchall()
+        if historias:
+            return historias[0][0]
+        return 0
+
+    def create(self, content):
         doc = content.get("documento_paciente")
         data = dict(
             documento_paciente=doc,
+            estado = content.get("estado"),
             ant_padre_card = content.get("ant_padre_card"),
             ant_madre_card = content.get("ant_madre_card"),
             ant_padre_cong = content.get("ant_padre_cong"),
@@ -120,25 +134,13 @@ class HistoriaMedicaService():
             cie_obs = content.get("cie_obs"),
             cie_concep_fin = content.get("cie_concep_fin")
         )
-        stmt = select(
-            HistoriaMedica.numero_historia
-            ).where(
-                HistoriaMedica.documento_paciente == doc
-            ).order_by(
-                desc(HistoriaMedica.numero_historia)
-            )
-        encontrado = db.session.execute(stmt).fetchall()
-        if encontrado and not nuevo_seguro:
-            return self.update(content, encontrado[0][0])
+        num_historia = self.buscar_num_historia(doc)
+        abierta = HistoriaMedica.query.filter_by(numero_historia=num_historia).first()
+        if abierta:
+            if abierta.estado:
+                return self.update(content)
         try:
-            if encontrado and nuevo_seguro:
-                abierta = HistoriaMedica.query.filter_by(numero_historia=encontrado[0][0]).first()
-                if abierta.estado:
-                    return ({
-                        "response": "No se puede crear una historia nueva para el documento dado porque la historia anterio se encuentra abierta"
-                    }, 400)
-            if encontrado and nuevo_seguro:
-                data["numero_historia"] = encontrado[0][0] + 1
+            data["numero_historia"] = num_historia + 1
             historia = HistoriaMedica(**data)
             db.session.add(historia)
             db.session.commit()
@@ -161,14 +163,14 @@ class HistoriaMedicaService():
             }
         }, 200)
     
-    def update(self, content, num_historia):
-        if num_historia:
-            historia = HistoriaMedica.query.filter_by(documento_paciente=content.get("documento_paciente"), numero_historia=num_historia).first()
-        else:
-            historia = HistoriaMedica.query.filter_by(documento_paciente=content.get("documento_paciente")).first()
+    def update(self, content):
+        doc = content.get("documento_paciente")
+        num_historia = self.buscar_num_historia(doc)
+        historia = HistoriaMedica.query.filter_by(documento_paciente=doc, numero_historia=num_historia).first()
+        
         if not historia:
             return ({
-                "response": "No existe una historia médica con ese documento." if not num_historia else "No existe el número de historia para el documento indicado."
+                "response": "No existe una historia médica con ese documento."
             }, 406)
 
         if not historia.estado:

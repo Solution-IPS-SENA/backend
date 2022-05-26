@@ -34,16 +34,8 @@ class HistoriaMedicaController(MethodView):
     #@verify_rol
     def put(self):
         content, valido = validate_input(self, request.get_json())
-        num_historia = request.args.get("num_historia")
         if valido:
-            if num_historia == None:
-                response, status = self.service.update(content, False)
-            elif num_historia.isnumeric():
-                num_historia = int(num_historia)
-                if num_historia  > 0:
-                    response, status = self.service.update(content, num_historia)
-            else:
-                response, status = ({"response": "num_historia debe de ser un número entero mayor que 0."}, 400)
+            response, status = self.service.update(content)
             return make_response(jsonify(response), status)
         return content
 

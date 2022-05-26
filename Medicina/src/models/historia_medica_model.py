@@ -122,8 +122,8 @@ class HistoriaMedica(db.Model):
     fecha_cierre = db.Column(db.DateTime, default=get_datetime())
 
     def __init__(
-            self, documento_paciente, ant_padre_card, ant_madre_card,
-            ant_padre_cong, ant_madre_cong, ant_per_pato,
+            self, documento_paciente, numero_historia, estado, ant_padre_card,
+            ant_madre_card, ant_padre_cong, ant_madre_cong, ant_per_pato,
             ant_per_qui, ant_per_trau, ant_per_toxi, ant_per_alergi,
             ant_per_ets, ant_per_obs1, ant_per_gin_fup, ant_per_gin_fum,
             ant_per_gin_plan, ant_per_gin_dism, ant_per_gin_disp,
@@ -148,10 +148,10 @@ class HistoriaMedica(db.Model):
             ocu_equi, ocu_acti, ocu_acc_emp1, ocu_acc_diag1, ocu_acc_emp2,
             ocu_acc_diag2, ocu_obs, cie_concep_desc, cie_concep_reco,
             cie_concep_aplaz, cie_concep_aplaza, cie_concep_reco_mot,
-            cie_obs, cie_concep_fin, numero_historia=False
+            cie_obs, cie_concep_fin
         ):
-        if numero_historia:
-            self.numero_historia = numero_historia
+        self.estado = estado
+        self.numero_historia = numero_historia
         self.documento_paciente = documento_paciente
         self.ant_padre_card = ant_padre_card
         self.ant_madre_card = ant_madre_card
