@@ -31,4 +31,4 @@ class Application():
 
     @classmethod
     def __register_routes(cls):
-        cls.app.add_url_rule(routes["historia_fonoaudiologia"], view_func=routes["historia_fonoaudiologia_controller"], methods=["GET", "POST", "PUT"])
+        cls.app.add_url_rule(routes["historia_psicologia"], view_func=routes["historia_psicologia_controller"], methods=["GET", "POST", "PUT"])

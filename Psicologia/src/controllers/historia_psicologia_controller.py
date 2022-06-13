@@ -2,15 +2,15 @@ from src.middlewares.request_middleware import json_input
 from src.middlewares.token_middleware import verify_rol
 from flask import request, make_response, jsonify
 from src.utils.functions import validate_input
-from src.validators.historia_fonoaudiologia_validator import HistoriaFonoaudiologiaSchema
-from src.services.historia_fonoaudiologia_service import HistoriaFonoaudiologiaService
+from src.validators.historia_psicologia_validator import HistoriaPsicologiaSchema
+from src.services.historia_psicologia_service import HistoriaPsicologiaService
 from flask.views import MethodView
 
-class HistoriaFonoaudiologiaController(MethodView):
+class HistoriaPsicologiaController(MethodView):
 
     def __init__(self):
-        self.validator = HistoriaFonoaudiologiaSchema()
-        self.service = HistoriaFonoaudiologiaService()
+        self.validator = HistoriaPsicologiaSchema()
+        self.service = HistoriaPsicologiaService()
 
     @json_input
     #@verify_rol
@@ -34,16 +34,8 @@ class HistoriaFonoaudiologiaController(MethodView):
     #@verify_rol
     def put(self):
         content, valido = validate_input(self, request.get_json())
-        num_historia = request.args.get("num_historia")
         if valido:
-            if num_historia == None:
-                response, status = self.service.update(content, False)
-            elif num_historia.isnumeric():
-                num_historia = int(num_historia)
-                if num_historia  > 0:
-                    response, status = self.service.update(content, num_historia)
-            else:
-                response, status = ({"response": "num_historia debe de ser un número entero mayor que 0."}, 400)
+            response, status = self.service.update(content)
             return make_response(jsonify(response), status)
         return content
 
