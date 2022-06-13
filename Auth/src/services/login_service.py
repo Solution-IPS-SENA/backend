@@ -59,7 +59,7 @@ class LoginService():
         return (
             {
                 "response": "Inicio de sesión satisfactorio",
-                "token": f"{token}"
+                "token": f"Bearer {token}"
             },
             200
         )

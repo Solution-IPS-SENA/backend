@@ -9,7 +9,7 @@ def verify_rol(func):
         token: str = request.headers.get('Authorization')
         if token:
             try:
-                decodificado = decode(token, KEYS.JWT, algorithms=["HS256"])
+                decodificado = decode(token.split(' ')[1], KEYS.JWT, algorithms=["HS256"])
                 if decodificado["rol"] == "EMPLEADO":
                     return func(*args, **kwargs)
                 return make_response(jsonify({
