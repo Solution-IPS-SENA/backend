@@ -10,7 +10,7 @@ def verify_rol(func):
         if token:
             try:
                 decodificado = decode(token, KEYS.JWT, algorithms=["HS256"])
-                if decodificado["rol"] in ["MEDICO", "EMPLEADO"]:
+                if decodificado["rol"] in ["PSICOLOGIA"]:
                     return func(*args, **kwargs)
                 return make_response(jsonify({
                     "statusCode": 401,

@@ -24,7 +24,7 @@ class Medico(db.Model):
     secretaria_salud = db.Column(db.String(100), nullable=False)
     correo = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    rol = db.Column(db.String(20), nullable=False, default="MEDICO")
+    rol = db.Column(db.String(20), nullable=False)
     foto = db.Column(db.String(150), nullable=True)
     join_at = db.Column(db.DateTime, nullable=False, default=time())
     last_login = db.Column(db.DateTime, nullable=False, default=time())

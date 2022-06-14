@@ -9,8 +9,8 @@ def verify_rol(func):
         token: str = request.headers.get('Authorization')
         if token:
             try:
-                decodificado = decode(token, KEYS.JWT, algorithms=["HS256"])
-                if decodificado["rol"] in ["OPTOMETRIA"]:
+                decodificado = decode(token.split(' ')[0], KEYS.JWT, algorithms=["HS256"])
+                if decodificado["rol"] in ["LABORATORIO"]:
                     return func(*args, **kwargs)
                 return make_response(jsonify({
                     "statusCode": 401,

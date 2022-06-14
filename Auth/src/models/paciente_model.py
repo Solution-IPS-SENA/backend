@@ -59,26 +59,27 @@ class Paciente(db.Model):
         self.password = password
         self.foto = foto
 
-    def __str__(self):
-        return f"""PACIENTE:
-    documento = {self.documento}
-    tipo_documento = {self.tipo_documento}
-    nombres = {self.nombres}
-    apellidos = {self.apellidos}
-    fecha_nacimiento = {self.fecha_nacimiento}
-    lugar_nacimiento = {self.lugar_nacimiento}
-    nacionalidad = {self.nacionalidad}
-    genero = {self.genero}
-    direccion = {self.direccion}
-    telefono = {self.telefono}
-    empresa = {self.empresa}
-    cargo = {self.cargo}
-    fecha_ingreso = {self.fecha_ingreso}
-    tiempo_cargo = {self.tiempo_cargo}
-    arl = {self.arl}
-    eps = {self.eps}
-    afp = {self.afp}
-    telefono_empresa = {self.telefono_empresa}
-    correo = {self.correo}
-    password = {self.password}
-    foto = {self.foto}"""
+    def to_dict(self):
+        return dict(
+            documento=self.documento,
+            tipo_documento=self.tipo_documento,
+            nombres=self.nombres,
+            apellidos=self.apellidos,
+            fecha_nacimiento=self.fecha_nacimiento,
+            lugar_nacimiento=self.lugar_nacimiento,
+            nacionalidad=self.nacionalidad,
+            genero=self.genero,
+            direccion=self.direccion,
+            telefono=self.telefono,
+            empresa=self.empresa,
+            cargo=self.cargo,
+            fecha_ingreso=self.fecha_ingreso,
+            tiempo_cargo=self.tiempo_cargo,
+            arl=self.arl,
+            eps=self.eps,
+            afp=self.afp,
+            telefono_empresa=self.telefono_empresa,
+            correo=self.correo,
+            password=self.password,
+            foto=self.foto
+        )

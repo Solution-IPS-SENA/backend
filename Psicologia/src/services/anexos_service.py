@@ -12,6 +12,6 @@ class AnexosService():
         req = requests.get(URLS.ANEXOS)
         data = req.json()
         self.SINO = data.get("sino")
-        self.APROBACION = data.get("aprobacion")
+        self.ADECUACION = data.get("adecuacion")
         self.REMITIDO = data.get("remitido")
         self.APROBACION = data.get("aprobacion")

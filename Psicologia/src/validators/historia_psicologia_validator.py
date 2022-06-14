@@ -2,7 +2,7 @@ from marshmallow import Schema, fields
 from marshmallow import validate
 from src.models.anexos import anexos as a
 
-class HistoriPsicologiaSchema(Schema):
+class HistoriaPsicologiaSchema(Schema):
     estado = fields.Bool(required=True)
     documento_paciente = fields.Str(required=True, validate=validate.Length(min=1, max=20))
     ant_tra = fields.Str(required=True, validate=lambda x: x in a.SINO)
