@@ -16,7 +16,7 @@ class MedicoService():
                     fecha_nacimiento=content.get('fecha_nacimiento'),
                     lugar_nacimiento=content.get('lugar_nacimiento'),
                     nacionalidad=content.get('nacionalidad'),
-                    genero=content.get('genero'),
+                    genero=content.get('genero')[0],
                     direccion=content.get('direccion'),
                     telefono=content.get('telefono'),
                     salario=content.get('salario'),
@@ -26,6 +26,7 @@ class MedicoService():
                     arl=content.get('arl'),
                     eps=content.get('eps'),
                     afp=content.get('afp'),
+                    rol=content.get('rol'),
                     correo=content.get('correo'),
                     password=bytes.decode(hashpw(bytes(content.get('password'), encoding='utf8'), gensalt()), encoding='utf-8'),
                     foto=content.get('foto')

@@ -10,7 +10,7 @@ class Empleado(db.Model):
     nombres = db.Column(db.String(100), nullable=False)
     apellidos = db.Column(db.String(100), nullable=False)
     fecha_nacimiento = db.Column(db.Date, nullable=False)
-    lugar_nacimiento = db.Column(db.String(3), nullable=False)
+    lugar_nacimiento = db.Column(db.String(100), nullable=False)
     nacionalidad = db.Column(db.String(3), nullable=False)
     genero = db.Column(db.String(1), nullable=False)
     direccion = db.Column(db.String(150), nullable=False)

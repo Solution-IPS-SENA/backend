@@ -30,7 +30,7 @@ class LoginService():
                 {
                     "response": "El usuario no está registrado."
                 },
-                422
+                409 
             )
             
         db_pass = bytes(usuario.password, 'utf8')

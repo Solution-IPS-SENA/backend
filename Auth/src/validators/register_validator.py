@@ -5,7 +5,7 @@ from src.models.anexos import anexos
 
 class BaseSchema():
     documento = fields.Str(required=True, validate=validate.Length(min=1, max=20))
-    tipo_documento = fields.Str(required=True, validate=lambda x: x in anexos.TIPO_DE_DOCUMENTO)
+    tipo_documento = fields.Str(required=True, validate=lambda x: x in anexos.TIPO_DOCUMENTO)
     nombres = fields.Str(required=True, validate=validate.Length(max=200))
     apellidos = fields.Str(required=True, validate=validate.Length(max=200))
     fecha_nacimiento = fields.DateTime(required=True, format=APP.DATE_FORMAT)
@@ -18,8 +18,7 @@ class BaseSchema():
     eps = fields.Str(required=True, validate=lambda x: x in anexos.EPS)
     afp = fields.Str(required=True, validate=lambda x: x in anexos.AFP)
     correo = fields.Str(required=True, validate=validate.Email())
-    password = fields.Str(required=True, validate=validate.Length(max=200))
-    rol = fields.Str(required=True, validate=validate.Length(max=20))
+    password = fields.Str(required=True, validate=validate.Length(min=4, max=200))
     foto = fields.Str(required=False, validate=validate.Length(max=150))
 
 class CreateRegisterEmpleadoSchema(BaseSchema, Schema):
@@ -30,6 +29,7 @@ class CreateRegisterMedicoSchema(BaseSchema, Schema):
     tp = fields.Str(required=True)
     rethus = fields.Str(required=True)
     secretaria_salud = fields.Str(required=True)
+    rol = fields.Str(required=True, validate=lambda x: x in ["MEDICO", "PSICOLOGO", "FONOAUDIOLOGO", "LABORATORIO", "OPTOMETRA"])
 
 class CreateRegisterPacienteSchema(BaseSchema, Schema):
     empresa = fields.Str(required=True, validate=validate.Length(min=1, max=45))

@@ -10,7 +10,7 @@ class Medico(db.Model):
     nombres = db.Column(db.String(100), nullable=False)
     apellidos = db.Column(db.String(100), nullable=False)
     fecha_nacimiento = db.Column(db.Date, nullable=False)
-    lugar_nacimiento = db.Column(db.String(3), nullable=False)
+    lugar_nacimiento = db.Column(db.String(100), nullable=False)
     nacionalidad = db.Column(db.String(3), nullable=False)
     genero = db.Column(db.String(1), nullable=False)
     direccion = db.Column(db.String(100), nullable=False)
@@ -30,7 +30,7 @@ class Medico(db.Model):
     last_login = db.Column(db.DateTime, nullable=False, default=time())
 
     def __init__(
-            self, documento, tipo_documento, nombres,  apellidos,
+            self, documento, tipo_documento, nombres,  apellidos, rol,
             fecha_nacimiento, lugar_nacimiento, nacionalidad, 
             genero, direccion, telefono, salario, tp, arl, eps, afp,
             rethus, secretaria_salud, correo, password, foto = None
@@ -39,6 +39,7 @@ class Medico(db.Model):
         self.tipo_documento = tipo_documento
         self.nombres = nombres
         self.apellidos = apellidos
+        self.rol = rol
         self.fecha_nacimiento = fecha_nacimiento
         self.lugar_nacimiento = lugar_nacimiento
         self.nacionalidad = nacionalidad

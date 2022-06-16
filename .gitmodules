@@ -1,3 +1,6 @@
 [submodule "Valores"]
 	path = Valores
 	url = https://github.com/Solution-IPS-SENA/api-valores
+[submodule "api-valores"]
+	path = api-valores
+	url = https://github.com/Solution-ips-sena/api-valores.git

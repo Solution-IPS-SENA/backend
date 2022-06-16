@@ -8,7 +8,7 @@ from flask.views import MethodView
 
 class RegisterPacienteController(MethodView):
 
-    decorators = [verify_rol]
+    # decorators = [verify_rol]
 
     def __init__(self):
         self.validator = register_validator.CreateRegisterPacienteSchema()
@@ -25,7 +25,7 @@ class RegisterPacienteController(MethodView):
 
 class RegisterMedicoController(MethodView):
 
-    decorators = [verify_rol]
+    # decorators = [verify_rol]
 
     def __init__(self):
         self.validator = register_validator.CreateRegisterMedicoSchema()
@@ -41,7 +41,7 @@ class RegisterMedicoController(MethodView):
 
 class RegisterEmpresaController(MethodView):
     
-    decorators = [verify_rol]
+    # decorators = [verify_rol]
 
     def __init__(self):
         self.validator = register_validator.CreateRegisterEmpresaSchema()

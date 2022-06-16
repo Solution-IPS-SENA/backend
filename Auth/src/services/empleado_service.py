@@ -16,7 +16,7 @@ class EmpleadoService():
                     fecha_nacimiento = content.get('fecha_nacimiento'),
                     lugar_nacimiento = content.get('lugar_nacimiento'),
                     nacionalidad = content.get('nacionalidad'),
-                    genero = content.get('genero'),
+                    genero = content.get('genero')[0],
                     direccion = content.get('direccion'),
                     telefono = content.get("telefono"),
                     salario = content.get('salario'),

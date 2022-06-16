@@ -6,7 +6,7 @@ class AnexosService():
     PAISES = []
     GENERO = []
     LUGAR_DE_NACIMIENTO = []
-    TIPO_DE_DOCUMENTO = []
+    TIPO_DOCUMENTO = []
     EPS = []
     ARL = []
     AFP = []
@@ -17,7 +17,7 @@ class AnexosService():
         self.PAISES = [x.get("iso") for x in data.get("paises")]
         self.GENERO = data.get("genero")
         self.LUGAR_DE_NACIMIENTO = data.get("lugarDeNacimiento")
-        self.TIPO_DE_DOCUMENTO = data.get("tipoDeDocumento")
+        self.TIPO_DOCUMENTO = [x.get("abreviacion") for x in data.get("tipoDocumento")]
         self.EPS = data.get("eps")
         self.ARL = data.get("arl")
         self.AFP = data.get("afp")
