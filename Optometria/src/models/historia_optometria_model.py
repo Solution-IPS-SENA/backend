@@ -72,12 +72,11 @@ class HistoriaOptometria(db.Model):
     hal_est_oi = db.Column(db.String(8), nullable=False, default=anexos.NORMALIDAD[0])
     hal_crom_oi = db.Column(db.String(8), nullable=False, default=anexos.NORMALIDAD[0])
     hal_obs = db.Column(db.Text(500), nullable=False, default="")
-    cie_concep_desc = db.Column(db.Text(500), nullable=False, default="")
+    motivo = db.Column(db.Text(500), nullable=False, default=anexos.MOTIVO[0])
     cie_concep_reco = db.Column(db.Text(300), nullable=False, default="")
-    cie_concep_aplaz = db.Column(db.Text(300), nullable=False, default="")
     cie_concep_reco_mot = db.Column(db.String(30), nullable=False, default=anexos.REMITIDO[0])
     cie_obs = db.Column(db.Text(500), nullable=False, default="")
-    cie_concep_fin = db.Column(db.String(12), nullable=False, default=anexos.APROBACION[0])
+    concepto = db.Column(db.String(12), nullable=False, default=anexos.CONCEPTO[0])
 
     def __init__(
             self, documento_paciente, estado, numero_historia, ant_def_refra, ant_def_cx,
@@ -92,9 +91,9 @@ class HistoriaOptometria(db.Model):
             agu_len_pre_od1, agu_len_pre_od2, agu_len_pre_oi1, agu_len_pre_oi2,
             agu_len_tiem, hal_ext_od, hal_mot_od, hal_ofta_od, hal_camp_od,
             hal_est_od, hal_crom_od, hal_ext_oi, hal_mot_oi, hal_ofta_oi, 
-            hal_camp_oi, hal_est_oi, hal_crom_oi, hal_obs, cie_concep_desc,
-            cie_concep_reco, cie_concep_aplaz, cie_concep_reco_mot, cie_obs,
-            cie_concep_fin
+            hal_camp_oi, hal_est_oi, hal_crom_oi, hal_obs, motivo,
+            cie_concep_reco, cie_concep_reco_mot, cie_obs,
+            concepto
         ):
         self.estado = estado
         self.numero_historia = numero_historia
@@ -160,12 +159,11 @@ class HistoriaOptometria(db.Model):
         self.hal_est_oi = hal_est_oi
         self.hal_crom_oi = hal_crom_oi
         self.hal_obs = hal_obs
-        self.cie_concep_desc = cie_concep_desc
+        self.motivo = motivo
         self.cie_concep_reco = cie_concep_reco
-        self.cie_concep_aplaz = cie_concep_aplaz
         self.cie_concep_reco_mot = cie_concep_reco_mot
         self.cie_obs = cie_obs
-        self.cie_concep_fin = cie_concep_fin
+        self.concepto = concepto
 
     def to_dict(self):
         return dict(
@@ -235,10 +233,9 @@ class HistoriaOptometria(db.Model):
             hal_est_oi=self.hal_est_oi,
             hal_crom_oi=self.hal_crom_oi,
             hal_obs=self.hal_obs,
-            cie_concep_desc=self.cie_concep_desc,
+            motivo=self.motivo,
             cie_concep_reco=self.cie_concep_reco,
-            cie_concep_aplaz=self.cie_concep_aplaz,
             cie_concep_reco_mot=self.cie_concep_reco_mot,
             cie_obs=self.cie_obs,
-            cie_concep_fin=self.cie_concep_fin
+            concepto=self.concepto
         )

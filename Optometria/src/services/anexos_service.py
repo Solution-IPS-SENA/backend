@@ -10,6 +10,8 @@ class AnexosService():
     NORMALIDAD = []
     APROBACION = []
     REMITIDO = []
+    CONCEPTO = []
+    MOTIVO = []
 
     def __init__(self):
         req = requests.get(URLS.ANEXOS)
@@ -21,3 +23,5 @@ class AnexosService():
         self.NORMALIDAD = data.get("normalidad")
         self.APROBACION = data.get("aprobacion")
         self.REMITIDO = data.get("remitido")
+        self.CONCEPTO = data.get("concepto")
+        self.MOTIVO = data.get("motivo")

@@ -112,12 +112,11 @@ class HistoriaMedica(db.Model):
     ocu_acc_emp2 = db.Column(db.String(100), nullable=False, default="")
     ocu_acc_diag2 = db.Column(db.String(500), nullable=False, default="")
     ocu_obs = db.Column(db.String(500), nullable=False, default="")
-    cie_concep_desc = db.Column(db.String(500), nullable=False, default="")
+    concepto = db.Column(db.String(12), nullable=False, default=anexos.CONCEPTO[0])
+    motivo = db.Column(db.String(500), nullable=False, default=anexos.MOTIVO[0])
     cie_concep_reco = db.Column(db.String(300), nullable=False, default="")
-    cie_concep_aplaz = db.Column(db.String(300), nullable=False, default="")
     cie_concep_reco_mot = db.Column(db.String(20), nullable=False, default="")
     cie_obs = db.Column(db.String(500), nullable=False, default="")
-    cie_concep_fin = db.Column(db.String(12), nullable=False, default=anexos.APROBACION[0])
     fecha_creacion = db.Column(db.DateTime, nullable=False, default=get_datetime())
     fecha_cierre = db.Column(db.DateTime, default=get_datetime())
 
@@ -146,9 +145,8 @@ class HistoriaMedica(db.Model):
             rie_ant_biom_2, rie_ant_biom_3, rie_ant_biom_4, rie_ant_psico_1,
             rie_ant_psico_2, rie_ant_psico_3, rie_ant_psico_4, rie_ant_obs,
             ocu_equi, ocu_acti, ocu_acc_emp1, ocu_acc_diag1, ocu_acc_emp2,
-            ocu_acc_diag2, ocu_obs, cie_concep_desc, cie_concep_reco,
-            cie_concep_aplaz, cie_concep_aplaza, cie_concep_reco_mot,
-            cie_obs, cie_concep_fin
+            ocu_acc_diag2, ocu_obs, motivo, cie_concep_reco,
+            cie_concep_reco_mot, cie_obs, concepto
         ):
         self.estado = estado
         self.numero_historia = numero_historia
@@ -256,13 +254,11 @@ class HistoriaMedica(db.Model):
         self.ocu_acc_emp2 = ocu_acc_emp2
         self.ocu_acc_diag2 = ocu_acc_diag2
         self.ocu_obs = ocu_obs
-        self.cie_concep_desc = cie_concep_desc
+        self.motivo = motivo
         self.cie_concep_reco = cie_concep_reco
-        self.cie_concep_aplaz = cie_concep_aplaz
-        self.cie_concep_aplaza = cie_concep_aplaza
         self.cie_concep_reco_mot = cie_concep_reco_mot
         self.cie_obs = cie_obs
-        self.cie_concep_fin = cie_concep_fin
+        self.concepto = concepto
 
 
     def to_dict(self):
@@ -373,13 +369,11 @@ class HistoriaMedica(db.Model):
             ocu_acc_emp2=self.ocu_acc_emp2,
             ocu_acc_diag2=self.ocu_acc_diag2,
             ocu_obs=self.ocu_obs,
-            cie_concep_desc=self.cie_concep_desc,
+            motivo=self.motivo,
             cie_concep_reco=self.cie_concep_reco,
-            cie_concep_aplaz=self.cie_concep_aplaz,
-            cie_concep_aplaza=self.cie_concep_aplaza,
             cie_concep_reco_mot=self.cie_concep_reco_mot,
             cie_obs=self.cie_obs,
-            cie_concep_fin=self.cie_concep_fin,
+            concepto=self.concepto,
             fecha_creacion=str(self.fecha_creacion),
             fecha_cierre=str(self.fecha_cierre)
         )
