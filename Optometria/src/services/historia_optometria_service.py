@@ -84,12 +84,11 @@ class HistoriaOptometriaService():
             hal_est_oi=content.get("hal_est_oi"),
             hal_crom_oi=content.get("hal_crom_oi"),
             hal_obs=content.get("hal_obs"),
-            cie_concep_desc=content.get("cie_concep_desc"),
+            motivo=content.get("motivo"),
             cie_concep_reco=content.get("cie_concep_reco"),
-            cie_concep_aplaz=content.get("cie_concep_aplaz"),
             cie_concep_reco_mot=content.get("cie_concep_reco_mot"),
             cie_obs=content.get("cie_obs"),
-            cie_concep_fin=content.get("cie_concep_fin")
+            concepto=content.get("concepto")
         )
         num_historia = self.buscar_num_historia(doc)
         abierta = HistoriaOptometria.query.filter_by(numero_historia=num_historia).first()
@@ -197,12 +196,11 @@ class HistoriaOptometriaService():
         historia.hal_est_oi = content.get("hal_est_oi")
         historia.hal_crom_oi = content.get("hal_crom_oi")
         historia.hal_obs = content.get("hal_obs")
-        historia.cie_concep_desc = content.get("cie_concep_desc")
+        historia.motivo = content.get("motivo")
         historia.cie_concep_reco = content.get("cie_concep_reco")
-        historia.cie_concep_aplaz = content.get("cie_concep_aplaz")
         historia.cie_concep_reco_mot = content.get("cie_concep_reco_mot")
         historia.cie_obs = content.get("cie_obs")
-        historia.cie_concep_fin = content.get("cie_concep_fin")
+        historia.concepto = content.get("concepto")
         historia.fecha_cierre = get_datetime()
         db.session.commit()
         return ({
