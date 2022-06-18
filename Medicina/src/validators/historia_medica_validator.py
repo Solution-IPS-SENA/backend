@@ -1,5 +1,4 @@
-from marshmallow import Schema, fields
-from marshmallow import validate
+from marshmallow import Schema, fields, validate
 from src.models.anexos import anexos as a
 from src.config import APP
 
@@ -120,9 +119,8 @@ class HistoriaMedicaSchema(Schema):
     ocu_acc_emp2 = fields.Str(required=True, validate=validate.Length(max=100))
     ocu_acc_diag2 = fields.Str(required=True, validate=validate.Length(max=500))
     ocu_obs = fields.Str(required=True, validate=validate.Length(max=500))
-    cie_concep_desc = fields.Str(required=True, validate=validate.Length(max=500))
     cie_concep_reco = fields.Str(required=True, validate=validate.Length(max=300))
-    cie_concep_aplaza = fields.Boolean(required=True)
     cie_concep_reco_mot = fields.Str(required=True, validate=lambda x: x in a.REMITIDO)
     cie_obs = fields.Str(required=True, validate=validate.Length(max=500))
-    cie_concep_fin = fields.Str(required=True, validate=lambda x: x in a.APROBACION)
+    concepto = fields.Str(required=True, validate=lambda x: x in a.CONCEPTO)
+    motivo = fields.Str(required=True, validate=lambda x: x in a.MOTIVO)

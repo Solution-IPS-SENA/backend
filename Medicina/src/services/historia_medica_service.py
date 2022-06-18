@@ -126,13 +126,11 @@ class HistoriaMedicaService():
             ocu_acc_emp2 = content.get("ocu_acc_emp2"),
             ocu_acc_diag2 = content.get("ocu_acc_diag2"),
             ocu_obs = content.get("ocu_obs"),
-            cie_concep_desc = content.get("cie_concep_desc"),
+            motivo = content.get("motivo"),
             cie_concep_reco = content.get("cie_concep_reco"),
-            cie_concep_aplaz = content.get("cie_concep_aplaz"),
-            cie_concep_aplaza = content.get("cie_concep_aplaza"),
             cie_concep_reco_mot = content.get("cie_concep_reco_mot"),
             cie_obs = content.get("cie_obs"),
-            cie_concep_fin = content.get("cie_concep_fin")
+            concepto = content.get("concepto")
         )
         num_historia = self.buscar_num_historia(doc)
         abierta = HistoriaMedica.query.filter_by(numero_historia=num_historia).first()
@@ -282,13 +280,13 @@ class HistoriaMedicaService():
         historia.ocu_acc_emp2 = content.get("ocu_acc_emp2")
         historia.ocu_acc_diag2 = content.get("ocu_acc_diag2")
         historia.ocu_obs = content.get("ocu_obs")
-        historia.cie_concep_desc = content.get("cie_concep_desc")
+        historia.motivo = content.get("motivo")
         historia.cie_concep_reco = content.get("cie_concep_reco")
         historia.cie_concep_aplaz = content.get("cie_concep_aplaz")
         historia.cie_concep_aplaza = content.get("cie_concep_aplaza")
         historia.cie_concep_reco_mot = content.get("cie_concep_reco_mot")
         historia.cie_obs = content.get("cie_obs")
-        historia.cie_concep_fin = content.get("cie_concep_fin")
+        historia.concepto = content.get("concepto")
         historia.fecha_cierre = get_datetime()
         db.session.commit()
         return ({

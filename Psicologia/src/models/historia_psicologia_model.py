@@ -32,15 +32,11 @@ class HistoriaPsicologia(db.Model):
     ries_emp_carga = db.Column(db.String(2), nullable=False, default=anexos.SINO[0])
     ries_emp_obs = db.Column(db.String(500), nullable=False, default="")
     histo_famili = db.Column(db.String(500), nullable=False, default="")
-    cie_concep_desc = db.Column(db.String(500), nullable=False, default="")
-    cie_concep_reco = db.Column(db.String(300), nullable=False, default="")
-    cie_concep_aplaz = db.Column(db.String(300), nullable=False, default="")
-    cie_concep_reco_mot = db.Column(db.String(30), nullable=False, default=anexos.REMITIDO[0])
     cie_obs = db.Column(db.String(500), nullable=False, default="")
-    cie_concep_fin = db.Column(db.String(12), nullable=False, default=anexos.APROBACION[0])
-    psicosensomotriz = db.Column(db.String(12), nullable=False, default=anexos.APROBACION[0])
-    personalidad = db.Column(db.String(12), nullable=False, default=anexos.APROBACION[0])
-    inteligencia = db.Column(db.String(12), nullable=False, default=anexos.APROBACION[0])
+    cie_concep_reco = db.Column(db.String(300), nullable=False, default="")
+    cie_concep_reco_mot = db.Column(db.String(30), nullable=False, default=anexos.REMITIDO[0])
+    concepto = db.Column(db.String(12), nullable=False, default=anexos.CONCEPTO[0])
+    motivo = db.Column(db.String(500), nullable=False, default=anexos.MOTIVO[0])
 
     def __init__(
             self, documento_paciente, estado, numero_historia, ant_tra,
