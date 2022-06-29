@@ -18,6 +18,8 @@ class AnexosService():
     BIOMECANICO = []
     PSICOSOCIAL = []
     NORMALIDAD = []
+    CONCEPTO = []
+    MOTIVO = []
 
     def __init__(self):
         req = requests.get(URLS.ANEXOS)
@@ -37,3 +39,5 @@ class AnexosService():
         self.BIOMECANICO = data.get("biomecanico")
         self.PSICOSOCIAL = data.get("psicosocial")
         self.NORMALIDAD = data.get("normalidad")
+        self.CONCEPTO = data.get("concepto")
+        self.MOTIVO = data.get("motivo")

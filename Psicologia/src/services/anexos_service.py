@@ -9,6 +9,8 @@ class AnexosService():
     APROBACION = []
     CARGA = []
     MEDIO_AMBIENTE = []
+    CONCEPTO = []
+    MOTIVO = []
 
     def __init__(self):
         req = requests.get(URLS.ANEXOS)
@@ -19,3 +21,5 @@ class AnexosService():
         self.APROBACION = data.get("aprobacion")
         self.CARGA = data.get("carga")
         self.MEDIO_AMBIENTE = data.get("medioAmbiete")
+        self.CONCEPTO = data.get("concepto")
+        self.MOTIVO = data.get("motivo")
