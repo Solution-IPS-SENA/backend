@@ -111,12 +111,12 @@ class HistoriaMedica(db.Model):
     ocu_acc_diag1 = db.Column(db.String(500), nullable=False, default="")
     ocu_acc_emp2 = db.Column(db.String(100), nullable=False, default="")
     ocu_acc_diag2 = db.Column(db.String(500), nullable=False, default="")
-    ocu_obs = db.Column(db.String(500), nullable=False, default="")
     concepto = db.Column(db.String(12), nullable=False, default=anexos.CONCEPTO[0])
     motivo = db.Column(db.String(500), nullable=False, default=anexos.MOTIVO[0])
     cie_concep_reco = db.Column(db.String(300), nullable=False, default="")
     cie_concep_reco_mot = db.Column(db.String(20), nullable=False, default="")
     cie_obs = db.Column(db.String(500), nullable=False, default="")
+    histo_famili = db.Column(db.String(500), nullable=False, default="")
     fecha_creacion = db.Column(db.DateTime, nullable=False, default=get_datetime())
     fecha_cierre = db.Column(db.DateTime, default=get_datetime())
 

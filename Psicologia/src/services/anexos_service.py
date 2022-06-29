@@ -20,6 +20,6 @@ class AnexosService():
         self.REMITIDO = data.get("remitido")
         self.APROBACION = data.get("aprobacion")
         self.CARGA = data.get("carga")
-        self.MEDIO_AMBIENTE = data.get("medioAmbiete")
+        self.MEDIO_AMBIENTE = data.get("medioAmbiente")
         self.CONCEPTO = data.get("concepto")
         self.MOTIVO = data.get("motivo")
