@@ -21,5 +21,5 @@ auth: dict = {
 }
 
 querys = {
-    "query_paciente": "/paciente", "query_paciente_controller": PacienteController.as_view("query_paciente")
+    "query_paciente": f"{version}/paciente", "query_paciente_controller": PacienteController.as_view("query_paciente")
 }

@@ -6,7 +6,8 @@ class QuerysService:
         if not paciente:
             return ({
                 "response": "El paciente no existe."
-            },  200)
+            },  422)
+        print(paciente.to_dict())
         return ({
             "response": paciente.to_dict()
         }, 200)

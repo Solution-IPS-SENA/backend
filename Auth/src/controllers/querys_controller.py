@@ -16,7 +16,7 @@ class PacienteController(MethodView):
             content = request.get_json()
             errors = self.validator.validate(content)
             if not errors:
-                response, status = self.service.obtenerPaciente(content.get("tipo_doc"), content.get("doc"))
+                response, status = self.service.obtenerPaciente(content.get("tipo_documento"), content.get("documento"))
                 return make_response(jsonify(response), status)
             return make_response(jsonify({
                 "response": str(errors),

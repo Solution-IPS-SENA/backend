@@ -18,7 +18,7 @@ class BaseSchema():
     eps = fields.Str(required=True, validate=lambda x: x in anexos.EPS)
     afp = fields.Str(required=True, validate=lambda x: x in anexos.AFP)
     correo = fields.Str(required=True, validate=validate.Email())
-    password = fields.Str(required=True, validate=validate.Length(min=4, max=200))
+    password = fields.Str(required=False)
     foto = fields.Str(required=False, validate=validate.Length(max=150))
 
 class CreateRegisterEmpleadoSchema(BaseSchema, Schema):

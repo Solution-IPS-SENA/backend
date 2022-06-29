@@ -20,11 +20,8 @@ class Application():
         cls.app.config["RUN_CONFIG"] = dict(host=APP.HOST, port=APP.PORT, debug=APP.DEBUG)
 
         # Configuración de CORS
-        CORS(cls.app, resources={
-            r"/*": {
-                "origins": [APP.CORS, "*"]
-            }
-        }, supports_credentials=True)
+        CORS(cls.app)
+
 
         cls.__register_routes()
 

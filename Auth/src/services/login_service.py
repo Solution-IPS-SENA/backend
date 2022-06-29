@@ -53,8 +53,6 @@ class LoginService():
                     "documento": usuario.documento,
                     "rol": usuario.rol
                 }, KEYS.JWT, "HS256")
-        
-        token = bytes.decode(token, 'utf8')
 
         return (
             {
