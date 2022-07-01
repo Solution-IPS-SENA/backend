@@ -1,3 +1,4 @@
+from email.policy import default
 from src.utils.instances import db
 from src.utils.functions import time
 
@@ -24,13 +25,13 @@ class Medico(db.Model):
     secretaria_salud = db.Column(db.String(100), nullable=False)
     correo = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    rol = db.Column(db.String(20), nullable=False)
+    rol = db.Column(db.String(20), nullable=False, default="MEDICO")
     foto = db.Column(db.String(150), nullable=True)
     join_at = db.Column(db.DateTime, nullable=False, default=time())
     last_login = db.Column(db.DateTime, nullable=False, default=time())
 
     def __init__(
-            self, documento, tipo_documento, nombres,  apellidos, rol,
+            self, documento, tipo_documento, nombres,  apellidos,
             fecha_nacimiento, lugar_nacimiento, nacionalidad, 
             genero, direccion, telefono, salario, tp, arl, eps, afp,
             rethus, secretaria_salud, correo, password, foto = None
@@ -39,7 +40,6 @@ class Medico(db.Model):
         self.tipo_documento = tipo_documento
         self.nombres = nombres
         self.apellidos = apellidos
-        self.rol = rol
         self.fecha_nacimiento = fecha_nacimiento
         self.lugar_nacimiento = lugar_nacimiento
         self.nacionalidad = nacionalidad

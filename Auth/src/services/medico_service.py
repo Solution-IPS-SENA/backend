@@ -26,7 +26,6 @@ class MedicoService():
                     arl=content.get('arl'),
                     eps=content.get('eps'),
                     afp=content.get('afp'),
-                    rol=content.get('rol'),
                     correo=content.get('correo'),
                     password=bytes.decode(hashpw(bytes(content.get('documento'), encoding='utf8'), gensalt()), encoding='utf-8'),
                     foto=content.get('foto')

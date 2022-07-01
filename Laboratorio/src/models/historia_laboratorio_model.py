@@ -8,7 +8,7 @@ class HistoriaLaboratorio(db.Model):
     general_id = db.Column(db.Integer, primary_key=True)
     numero_historia = db.Column(db.Integer, default=1)
     documento_paciente = db.Column(db.String(20), nullable=False)
-    estado = db.Column(db.Boolean, nullable=False, default=True) # Estado abierto = True
+    estado = db.Column(db.Boolean, nullable=False, default=False) # Estado abierto = True
     fecha_creacion = db.Column(db.DateTime, nullable=False, default=get_datetime())
     fecha_cierre = db.Column(db.DateTime, default=get_datetime())
     hema = db.Column(db.String(10), nullable=False, default=anexos.NORMALIDAD[0])
@@ -40,11 +40,11 @@ class HistoriaLaboratorio(db.Model):
 
 
     def __init__(
-            self, documento_paciente, numero_historia, estado, hema,
+            self, documento_paciente, numero_historia, hema,
             glice, colestot,coleshdl, colesldl, trigli, parcori, culori,
             copro, frotsisfar, cultifar, koh, tsh, creat, funchep, protinc,
             pt, ptt, aciuri, antigpros, gasarte, vdrl, gravi, otro,
-            obser1_lab, obser2_lab
+            obser1_lab, obser2_lab, estado=False
         ):
         self.estado = estado
         self.numero_historia = numero_historia

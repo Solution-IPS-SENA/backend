@@ -22,7 +22,6 @@ class HistoriaLaboratorioService():
         doc = content.get("documento_paciente")
         data = dict(
             documento_paciente=doc,
-            estado = content.get("estado"),
             hema = content.get("hema"),
             glice = content.get("glice"),
             colestot = content.get("colestot"),

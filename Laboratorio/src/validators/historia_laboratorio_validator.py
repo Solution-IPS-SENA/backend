@@ -14,7 +14,6 @@ def validar_fecha(fecha):
         return False
 
 class HistoriaLaboratorioSchema(Schema):
-    estado = fields.Bool(required=True)
     documento_paciente = fields.Str(required=True, validate=validate.Length(min=1, max=20))
     hema = fields.Str(required=True, validate=lambda x: x in a.NORMALIDAD)
     glice = fields.Str(required=True, validate=lambda x: x in a.NORMALIDAD)
@@ -40,5 +39,5 @@ class HistoriaLaboratorioSchema(Schema):
     vdrl = fields.Str(required=True, validate=lambda x: x in a.NORMALIDAD)
     gravi = fields.Str(required=True, validate=lambda x: x in a.NORMALIDAD)
     otro = fields.Str(required=True, validate=lambda x: x in a.NORMALIDAD)
-    obser1_lab = fields.Str(required=True, validate=lambda x: x in a.NORMALIDAD)
-    obser2_lab = fields.Str(required=True, validate=lambda x: x in a.NORMALIDAD)
+    obser1_lab = fields.Str(required=True, validate=validate.Length(max=500))
+    obser2_lab = fields.Str(required=True, validate=validate.Length(max=500))

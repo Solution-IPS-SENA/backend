@@ -21,7 +21,7 @@ class HistoriaOptometria(db.Model):
     ant_desor = db.Column(db.String(2), nullable=False, default=anexos.SINO[0])
     ant_acc = db.Column(db.String(2), nullable=False, default=anexos.SINO[0])
     ant_trau = db.Column(db.String(2), nullable=False, default=anexos.SINO[0])
-    ant_obs = db.Column(db.String(2), nullable=False, default=anexos.SINO[0])
+    ant_obs = db.Column(db.String(500), nullable=False, default="")
     ant_ocu_exp_vide = db.Column(db.String(2), nullable=False, default=anexos.SINO[0])
     ant_ocu_acc = db.Column(db.String(2), nullable=False, default=anexos.SINO[0])
     ant_ocu_temp = db.Column(db.String(2), nullable=False, default=anexos.SINO[0])
@@ -77,6 +77,7 @@ class HistoriaOptometria(db.Model):
     cie_concep_reco_mot = db.Column(db.String(30), nullable=False, default=anexos.REMITIDO[0])
     cie_obs = db.Column(db.Text(500), nullable=False, default="")
     concepto = db.Column(db.String(12), nullable=False, default=anexos.CONCEPTO[0])
+    histo_famili = db.Column(db.Text(500), nullable=False, default="")
 
     def __init__(
             self, documento_paciente, estado, numero_historia, ant_def_refra, ant_def_cx,
